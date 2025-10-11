@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Lab</title>
+  <meta name="description" content="인공지능·데이터·시스템 연구실 공식 랜딩 페이지" />
+  <style>
+    /*========== 디자인 토큰 ==========*/
+    :root {
+      --bg: #ffffff;         /* 배경 */
+      --panel: #ffffff;      /* 카드/패널 */
+      --text: #181818;       /* 본문 텍스트 */
+      --muted: #9cb0b3;      /* 보조 텍스트 */
+      --primary: #7ac1ff;    /* 브랜드 기본색 (원하면 바꾸기) */
+      --accent: #81ded8;     /* 보조 포인트색 */
+      --radius: 16px;
+      --shadow: 0 10px 25px rgba(42, 72, 83, 0.25);
+      --maxw: 1140px;        /* 컨테이너 최대폭 */
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Apple SD Gothic Neo, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 70% -10%, rgba(97,231,200,.07), transparent 40%),
+                  radial-gradient(900px 700px at -10% 20%, rgba(122,162,255,.10), transparent 50%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; border-radius: 12px; }
+
+    .container { width: min(100% - 32px, var(--maxw)); margin-inline: auto; align-content: center; align-items: center;}
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1.05rem; border-radius: 999px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #0b0c10; font-weight: 700; border: 0; cursor: pointer; box-shadow: var(--shadow);}    
+    .btn.ghost { background: transparent; color: var(--text); outline: 1px solid #33aab0; box-shadow: none; }
+    .card {
+      position: relative; background: var(--panel);
+      border: 1px solid var(--line); border-radius: var(--radius); padding: 22px;
+      box-shadow: var(--shadow);
+      transition: transform .18s ease, box-shadow .18s ease, background .2s ease;
+      will-change: transform;  /* 성능 힌트 */
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(2,6,23,.12);
+    }
+    .card h3 { margin: 0 0 .5rem; font-size: 1.18rem; }
+    .icon {
+      width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; margin-bottom: .9rem;
+      background: linear-gradient(135deg, rgba(105,167,255,.12), rgba(95,234,212,.12));
+      border: 1px solid var(--line);
+    }
+    .icon svg { width: 22px; height: 22px; stroke: var(--primary); }
+
+    /*========== 헤더 ==========*/
+    header {position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(140%) blur(10px); background: linear-gradient(180deg, rgba(117, 229, 239, 0.9), rgba(255, 255, 255, 0)); }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: .8rem 0; }
+    .brand { display: flex; align-items: center; gap: .6rem; font-weight: 800; letter-spacing: .2px; }
+    .logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--primary), var(--accent)); box-shadow: var(--shadow); }
+    .links { display: none; gap: 1.1rem; align-items: center; }
+    .links a { color: #00383c; font-weight: 60; }
+    .links a:hover { color: var(--muted); }
+    .menu-btn { background: transparent; border: 0; color: var(--text); font-size: 1.6rem; }
+    .mobile-menu { display: none; padding: .4rem 0 1rem; }
+    .mobile-menu a { display: block; padding: .7rem 0; color: var(--text); font-weight: 600; }
+    .mobile-menu a:hover { color: var(--text); }
+
+    /*========== 히어로 ==========*/
+    .hero { padding: 84px 0 48px; }
+    .hero .inner { display: grid; gap: 24px; align-items: center; }
+    .eyebrow { color: var(--accent); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; font-size: .82rem; }
+    h1 { font-size: clamp(1.9rem, 4vw + .8rem, 3.1rem); line-height: 1.15; margin: .35rem 0 .55rem; }
+    .sub { color: var(--muted); font-size: 1.05rem; }
+    .cta { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1rem; }
+    .hero-card { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)), var(--panel);  border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+
+    /*========== 공통 섹션 ==========*/
+    .section { padding: 56px 0; }
+    .section h2 { font-size: clamp(1.4rem, 2vw + .8rem, 2.1rem); margin: 0 0 1rem; }
+    .muted { color: var(--muted); }
+    .grid { display: grid; gap: 16px; }
+    .card { background: var(--panel);  border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+    .card h3 { margin: 0 0 .4rem; }
+
+    /* 구성원 카드 */
+    .people { grid-template-columns: repeat(1, 1fr); }
+    .person { display: grid; gap: 10px; align-items: center;}
+    .person h4 { margin: 0; }
+    .chip { display: inline-block; padding: .2rem .55rem; border-radius: 999px; color: var(--muted); font-size: .85rem; }
+
+    /* 출판 리스트 */
+    .pub-list { display: grid; gap: 12px; }
+    .pub { background: var(--panel); border-radius: 12px; padding: 14px 16px; }
+    .pub .meta { color: var(--muted); font-size: .95rem; }
+
+    /* 소식 */
+    .news { display: grid; gap: 12px; }
+    .news-item { display: grid; gap: 4px; border-left: 3px solid #2a2e36; padding-left: 12px; }
+    .news-item time { color: var(--muted); font-size: .9rem; }
+
+   
+
+    /*========== 반응형 ==========*/
+    @media (min-width: 768px) {
+      .links { display: flex; }
+      .menu-btn { display: none; }
+      .mobile-menu { display: none !important; }
+      .hero .inner { grid-template-columns: 1.1fr .9fr; }
+      .people { grid-template-columns: repeat(2, 1fr); }
+      .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+      .about { grid-template-columns: 1.2fr .8fr; }
+    }
+    @media (min-width: 1024px) {
+      .hero { padding: 104px 0 56px; }
+      .section { padding: 72px 0; }
+      .people { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="주요">
+      <div class="brand"><span class="logo" aria-hidden="true"></span><span id="labName">AI Lab</span></div>
+      <nav class="links" aria-label="주요 링크">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#people">People</a>
+        <a href="#publications">Publications</a>
+        <a href="#news">News</a>
+      </nav>
+      <button class="menu-btn" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+    </div>
+    <div class="container mobile-menu" id="mobileMenu" aria-label="모바일 메뉴">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#people">People</a>
+      <a href="#publications">Publications</a>
+      <a href="#news">News</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container inner">
+        <div>
+          <div class="eyebrow">Sungshin AI Convergence</div>
+          <h1 id="tagline" style="font-size: 80px;">AI LAB</h1>
+          <p class="sub">Exploring human, physiological, and environmental intelligence through multimodal sensing and AI.</p>
+          <div class="cta">
+            <a class="btn" href="#join" style="width: 100px;">About</a>
+            <a class="btn ghost" href="#projects">Projects</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img alt="랩실 사진 또는 대표 이미지" src="img/단체.png" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 소개 -->
+    <section id="about" class="section">
+      <div class="container about grid">
+        <div>
+          <h2>About</h2>
+          <p class="muted">Our lab explores how sensing and intelligence converge to understand humans and their environment. We design multimodal systems that integrate wearable, physiological, and environmental data with AI models — creating technology that perceives the world intelligently.</p>
+          <ul class="muted">
+            <li>키워드: Computer Vision, WiFi CSI, Pose Estimation, Multimodal Learning</li>
+            <li>가치: 재현성(reproducibility), 단순함(simplicity), 현장성(applicability)</li>
+          </ul>
+          <div class="grid cols-3" style="gap:22px;">
+          <article class="card">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg></div>
+            <h3>Multimodal Sensing</h3>
+            <p class="muted">IMU·PPG·Wi-Fi CSI·위치 등 서로 다른 신호를 결합해 사람과 맥락을 해석합니다.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+            <h3>On-device Intelligence</h3>
+            <p class="muted">웨어러블/모바일에서 실시간 추론 가능한 경량 모델을 설계합니다.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 12a4 4 0 110-8 4 4 0 010 8z"/><path d="M4 20a8 8 0 1116 0"/></svg></div>
+            <h3>Human-centered Research</h3>
+            <p class="muted">안전·건강·일상 경험을 개선하는 인간 중심 기술을 만듭니다.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v18M3 12h18" opacity=".25"/><path d="M8 8h8v8H8z"/></svg></div>
+            <h3>AI & Reasoning</h3>
+            <p class="muted">LLM과 ML을 활용해 멀티모달 관측을 논리적으로 요약·설명합니다.</p>
+          </article>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 연구분야 -->
+    <section id="research" class="section">
+      <div class="container">
+        <h2>Research</h2>
+        <div class="grid cols-3">
+          <article class="card"><h3>WiFi 기반 인체이해</h3><p class="muted">CSI를 활용한 존재 탐지, 포즈 추정, 거리 구간 분류 등 비전 대체/보완 연구.</p></article>
+          <article class="card"><h3>멀티모달 러닝</h3><p class="muted">무선-영상-텍스트 결합 표현 학습과 교차감각 지도.</p></article>
+          <article class="card"><h3>재현 가능한 ML</h3><p class="muted">데이터 파이프라인 표준화, 로그/체크포인트, 결과 재현 자동화.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 구성원 -->
+    <section id="people" class="section">
+      <div class="container" style="align-content: center;">
+        
+        <h2>People</h2>
+        <div class="card person" style="width: 360px;">
+            <div style="display:flex; gap:14px;">
+              <img src="img/재현.png" alt="PI 프로필" width="96" height="110" style="margin-top: px;" />
+              <div>
+                <h4>Hajeong Kim</h4>
+                <p style="font-size:17px; color: #b9e1ef; margin-top: 0px;">Undergraduated studnet</p>
+                <p class="muted">PPG-based Risk Detection</p> 
+                <div class="chip">happykhj67@gmail.com</div>
+              </div>
+            </div>
+          </div>
+        <div class="grid people">
+            
+          <div class="card person">
+            <div style="display:flex; gap:14px;">
+              <img src="img/하정.jpg" alt="PI 프로필" width="96" height="110" style="margin-top: px;" />
+              <div>
+                <h4>Hajeong Kim</h4>
+                <p style="font-size:17px; color: #b9e1ef; margin-top: 0px;">Undergraduated studnet</p>
+                <p class="muted">PPG-based Risk Detection</p> 
+                <div class="chip">happykhj67@gmail.com</div>
+              </div>
+            </div>
+          </div>
+          <div class="card person">
+            <div style="display:flex; gap:14px; align-items:center;">
+              <img src="https://dummyimage.com/96x96/1a1e25/ffffff&text=UG" alt="학부연구생" width="96" height="96" />
+              <div>
+                <h4>오긍요 (UG)</h4>
+                <p class="muted">WiFi CSI 기반 포즈 추정, 멀티태스킹 네트워크</p>
+                <div class="chip">github.com/username</div>
+              </div>
+            </div>
+          </div>
+          <!-- 필요 시 인원 카드 추가 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 논문/출판 -->
+    <section id="publications" class="section">
+      <div class="container">
+        <h2>Publications</h2>
+        <div class="card hover">
+          <div class="pub">
+            <div class="meta">2025 · Conference</div>
+            <div><strong>CSI2Pose: WiFi Channel State Information for Human Pose Estimation</strong></div>
+            <div class="muted">G. Oh, J. Doe, W. Ko</div>
+            <a class="href" href="https://yjh5455.wixsite.com/jaehyun" target="_blank" rel="noopener noreferrer">view paper</a>
+          </div>
+          <!-- 항목 추가 가능 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 프로젝트 -->
+    <section id="projects" class="section">
+      <div class="container">
+        <h2>프로젝트</h2>
+        <div class="grid cols-3">
+          <article class="card">
+            <h3>Wi-Pose Dataset 정제</h3>
+            <p class="muted">.npz/.npy 파이프라인 정리, skeleton 레이블 품질관리, 학습 재현 스크립트 제공.</p>
+          </article>
+          <article class="card">
+            <h3>멀티태스크 네트워크</h3>
+            <p class="muted">포즈 회귀 + 구간 분류 + 프레임 프레즌스 예측의 통합 학습.</p>
+          </article>
+          <article class="card">
+            <h3>실험 자동화</h3>
+            <p class="muted">결과 로깅/시각화 템플릿, 체크포인트·리플레이 관리.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 소식 -->
+    <section id="news" class="section">
+      <div class="container">
+        <h2>News</h2>
+        <div class="news">
+          <div class="news-item">
+            <time datetime="2025-10-12">2025-10-12</time>
+            <div>랩실 웹페이지 1차 버전 오픈 🎉</div>
+          </div>
+          <div class="news-item">
+            <time datetime="2025-10-01">2025-10-01</time>
+            <div>WiFi CSI 멀티태스크 모델 성능 리포트 업데이트</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+   
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> <span id="labNameFooter">AI Lab</span> — All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // 현재 연도 표기
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 모바일 메뉴 토글
+    const btn = document.querySelector('.menu-btn');
+    const menu = document.getElementById('mobileMenu');
+    btn.addEventListener('click', () => {
+      const opened = menu.style.display === 'block';
+      menu.style.display = opened ? 'none' : 'block';
+      btn.setAttribute('aria-expanded', String(!opened));
+    });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      menu.style.display = 'none';
+      btn.setAttribute('aria-expanded', 'false');
+    }));
+
+    // 랩실 이름/태그라인 동적 치환 예: 추후 JSON으로 교체 가능
+    const LAB_NAME = 'AI Lab';  // 여기만 바꾸면 헤더/푸터 동시 반영
+    document.getElementById('labName').textContent = LAB_NAME;
+    document.getElementById('labNameFooter').textContent = LAB_NAME;
+    document.getElementById('tagline').textContent = TAGLINE;
+  </script>
+</body>
+</html>
