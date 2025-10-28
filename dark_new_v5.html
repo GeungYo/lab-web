@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Lab</title>
+  <meta name="description" content="연구실 홈피" />
+  <style>
+    :root{
+      --bg:#0d1117; --panel:#0f1520; --text:#e6edf3; --muted:#9aa7b3; --line:#1f2a37;
+      --primary:#81ded8; --accent:#7ac1ff; --maxw:1200px; --header-h:72px; --news-collapsed:980px;
+    }
+    html{ scroll-behavior:smooth; scroll-padding-top: calc(var(--header-h) + 14px); }
+    *,*::before,*::after{ box-sizing: border-box; }
+    body{ margin:0; font-family: ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% -10%, rgba(129,222,216,.12), transparent 40%),
+        radial-gradient(900px 600px at 90% 0%, rgba(122,193,255,.10), transparent 45%),
+        var(--bg);
+      background-repeat:no-repeat; background-attachment: fixed;
+    }
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; border-radius:12px; }
+    .container{ width:min(100% - 32px, var(--maxw)); margin-inline:auto; }
+
+    /* header/menu */
+    header{ position:sticky; top:0; z-index:20; backdrop-filter: blur(6px); background: rgba(8,10,13,.6); border-bottom:1px solid var(--line); }
+    .bar{ height:var(--header-h); display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 12px; }
+    .logo{ display:flex; align-items:center; gap:10px; font-weight:800; }
+    nav.menu{ display:flex; gap:18px; align-items:center; }
+    nav.menu a{ color:var(--muted); font-weight:700; padding:.5rem .25rem; border-radius:8px; }
+    nav.menu a.active, nav.menu a:hover{ color:var(--text); background: rgba(255,255,255,.03); }
+    .menu-btn{ background:transparent; border:0; color:var(--text); font-size:1.6rem; }
+
+    /* layout */
+    .section{ padding:88px 0; scroll-margin-top: calc(var(--header-h) + 14px); }
+    h1,h2,h3{ margin:0 0 12px; }
+    .muted{ color:var(--muted); }
+    .grid{ display:grid; gap:16px; }
+    .cols-3{ grid-template-columns: repeat(3,1fr); }
+    @media (max-width:920px){ .cols-3{ grid-template-columns: 1fr; } }
+
+    .card{ background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02)); border:1px solid var(--line); border-radius:16px; padding:18px; transition: transform .18s ease, box-shadow .18s ease; }
+    .card:hover{ transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.24); }
+
+    /* about */
+    .about-wrap{ display:grid; gap:14px; grid-template-columns:1.2fr .8fr; align-items:start; }
+    @media (max-width:920px){ .about-wrap{ grid-template-columns:1fr; } }
+
+    /* news */
+    .news-wrap{ position:relative; max-height: var(--news-collapsed); overflow:hidden; transition: max-height .32s ease; }
+    .news-wrap.is-open{ max-height: 9999px; }
+    .news{ display:grid; gap:22px; }
+    .news-item{ border-radius:16px; padding:16px; border:1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); }
+    .news-item time{ display:block; font-weight:800; color:var(--muted); margin-bottom:8px; }
+
+    /* photo grid */
+    .photo-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:10px; }
+    .photo-grid img{ width:100% !important; height:auto; float:none !important; margin:0 !important; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.26); cursor:zoom-in; transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; pointer-events:auto; }
+    .photo-grid img:hover{ transform: translateY(-2px) scale(1.02); box-shadow:0 10px 26px rgba(0,0,0,.28); filter:saturate(108%); }
+
+    /* publications */
+    .pub{ border-top:1px dashed var(--line); padding-top:10px; }
+    .pub:first-child{ border-top:0; padding-top:0; }
+
+    /* footer */
+    footer{ background: rgba(255,255,255,.02); border-top:1px solid var(--line); margin-top:40px; }
+
+    /* lightbox */
+    .lightbox-backdrop{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.72); z-index:1100; backdrop-filter: blur(2px); }
+    .lightbox-backdrop.open{ display:flex; animation: lb-fade .18s ease; }
+    @keyframes lb-fade{ from{ opacity:0 } to { opacity:1 } }
+
+    .lightbox{ position:relative; width:min(92vw,980px); height:min(86vh,720px); background: rgba(20,22,28,.92); border-radius:14px; overflow:hidden; border:1px solid var(--line); display:flex; align-items:center; }
+    .lightbox-track{ display:flex; height:100%; transition: transform .35s cubic-bezier(.2,.8,.2,1); will-change: transform; }
+    .lightbox-slide{ min-width:100%; display:grid; place-items:center; padding:12px; }
+    .lightbox-slide img{ max-width:100%; max-height:100%; object-fit:contain; border-radius:10px; box-shadow:0 8px 28px rgba(0,0,0,.35); }
+
+    .lightbox-close{ position:absolute; top:10px; right:10px; background: rgba(255,255,255,.08); border:1px solid var(--line); border-radius:10px; padding:8px 10px; cursor:pointer; color:var(--text); z-index:1200; }
+    .lightbox-arrow{ position:absolute; top:50%; transform: translateY(-50%); background: rgba(255,255,255,.06); border:1px solid var(--line); border-radius:10px; width:44px; height:44px; display:grid; place-items:center; cursor:pointer; z-index:1200; font-weight:800; transition: transform .12s ease; }
+    .lightbox-arrow:hover{ transform: translateY(-50%) scale(1.03); }
+    .lightbox-prev{ left:12px; } .lightbox-next{ right:12px; }
+    .lightbox-arrow.hidden{ display:none; }
+
+    /* subtle scrim to hint more content sides */
+    .lightbox::before, .lightbox::after { content:''; position:absolute; top:0; bottom:0; width:64px; pointer-events:none; background: linear-gradient(to right, rgba(20,22,28,.95), rgba(20,22,28,0)); z-index:110; }
+    .lightbox::after{ right:0; transform: scaleX(-1); }
+    .lightbox::before{ left:0; }
+
+    /* view more button general */
+    .news-more{ display:inline-block; margin-top:18px; cursor:pointer; background:linear-gradient(135deg,var(--primary),var(--accent)); color:#0b0c10; font-weight:800; padding:.9rem 1.1rem; border-radius:999px; border:0; }
+
+    /* small helpers */
+    [data-animate]{ opacity:0; transform:translateY(10px); transition: opacity .38s ease, transform .38s ease; }
+    [data-animate].in{ opacity:1; transform:none; }
+    @media (max-width:640px){ .lightbox{ width:94vw; height:78vh; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container bar">
+      <div class="logo"><img src="img/logo.svg" alt="logo" width="28"><span id="labName">AI Lab</span></div>
+      <nav class="menu" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#news">News</a>
+        <a href="#research">Research</a>
+        <a href="#member">Member</a>
+        <a href="#publications">Publications</a>
+      </nav>
+      <button class="menu-btn" aria-controls="mobileMenu" aria-expanded="false">☰</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu" aria-label="Mobile" style="display:none; padding:.4rem 12px; border-bottom:1px solid var(--line);">
+      <a href="#about">About</a>
+      <a href="#news">News</a>
+      <a href="#research">Research</a>
+      <a href="#member">Member</a>
+      <a href="#publications">Publications</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero section">
+    <div class="container" style="display:grid; gap:18px; align-items:center; grid-template-columns:1.1fr .9fr;">
+      <div>
+        <h1 data-animate="up">We are <span style="background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent;">AI Lab</span></h1>
+        <p class="muted" data-animate="up">WiFi CSI 기반 자세/위치 추정을 연구합니다. 데이터 엔지니어링부터 모델링, 실험 자동화까지 전 주기를 다룹니다.</p>
+        <div style="display:flex; gap:10px; margin-top:12px;" data-animate="up">
+          <a class="btn" href="#news" style="background:linear-gradient(135deg,var(--primary),var(--accent)); padding:.9rem 1.1rem; border-radius:999px; color:#0b0c10; font-weight:800;">Latest News</a>
+          <a class="btn" href="#projects" style="background:linear-gradient(135deg,var(--primary),var(--accent)); padding:.9rem 1.1rem; border-radius:999px; color:#0b0c10; font-weight:800;">Our Projects</a>
+        </div>
+      </div>
+      <div>
+        <img src="img/hero.jpg" alt="hero" width="640" style="border:1px solid var(--line);">
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 style="font-size:35px;" data-animate="up">About</h2>
+      <div class="about-wrap">
+        <div>
+          <p class="muted" data-animate="up">우리 연구실은 WiFi 채널상태정보(CSI)를 이용해 실내 위치와 사람의 포즈를 추정하는 연구를 수행합니다. 데이터 수집·정제·전처리, 모델링, 시각화, 자동화 파이프라인까지 전 과정을 직접 구축합니다.</p>
+          <div class="dots" data-animate="up" style="display:inline-grid; grid-template-columns: repeat(12,8px); gap:8px; margin-top:12px;">
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+            <i style="width:8px;height:8px;border-radius:999px;background:linear-gradient(120deg,var(--primary),var(--accent));opacity:.75;display:block;"></i>
+          </div>
+        </div>
+        <img src="img/about.jpg" alt="about" width="560" data-animate="up" style="border:1px solid var(--line);">
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" class="section">
+    <div class="container">
+      <h2 style="font-size:35px;" data-animate="up">Latest News</h2>
+
+      <!-- news-wrap contains list and is collapsible; View-more button is OUTSIDE news-wrap to avoid overlay -->
+      <div class="news-wrap" data-collapsible>
+        <div class="news" data-stagger>
+          <!-- 치안 박람회 -->
+          <div class="news-item" data-animate="up">
+            <time datetime="2025-10-26">2025-10-22 ~ 2025-10-26</time>
+            <div style="margin-bottom:10px;">Participated Korea Police World Expo</div>
+            <div>
+              <div class="photo-grid">
+                <img src="img/police1.jpg" alt="police1">
+                <img src="img/police3.jpg" alt="police3">
+                <img src="img/police2.jpg" alt="police2">
+              </div>
+            </div>
+          </div>
+
+          <!-- 상장 -->
+          <div class="news-item" data-animate="up">
+            <time datetime="2024-05-24">2024-05-24</time>
+            <div style="margin-bottom:10px;">Certificate</div>
+            <div>
+              <div class="photo-grid">
+                <img src="img/certificate.png" alt="certificate">
+                <img src="img/certificate2.png" alt="certificate2">
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- .news -->
+      </div> <!-- .news-wrap -->
+
+      <!-- View more 버튼: 반드시 news-wrap 바깥, #news 섹션 내부에 단 한 개만 존재 -->
+      <div style="display:flex; justify-content:center;">
+        <button class="news-more" type="button" aria-expanded="false">View more</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projects anchor (keeps existing link href="#projects" working) -->
+  <div id="projects" style="position:relative; top:-80px;"></div>
+
+  <!-- Research -->
+  <section id="research" class="section">
+    <div class="container">
+      <h2 style="font-size:35px;">Research</h2>
+      <div class="grid cols-3">
+        <article class="card"><h3>Wi-Pose Dataset 정제</h3><p class="muted">파이프라인 정리, 레이블 품질관리, 재현 스크립트 제공.</p></article>
+        <article class="card"><h3>멀티태스크 네트워크</h3><p class="muted">포즈 회귀 + 구간 분류 + 프레임 프레즌스 예측.</p></article>
+        <article class="card"><h3>실험 자동화</h3><p class="muted">로깅/시각화 템플릿, 반복 실험 컨트롤.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Member -->
+  <section id="member" class="section">
+    <div class="container" style="align-content:center;">
+      <h2 style="font-size:35px;" data-animate="up">Member</h2>
+
+      <div class="card person" style="width:600px; margin:0 auto;" data-animate="up">
+        <div style="display:flex; gap:14px; justify-content:center;">
+          <img src="img/재현.png" alt="PI 프로필" width="140" style="border:1px solid var(--line);">
+          <div>
+            <div class="muted" style="margin-bottom:8px;">PI</div>
+            <h3 style="margin:0 0 6px;">Jaehyun Yoo</h3>
+            <div class="muted">Research interests: WiFi CSI, Pose Estimation, Indoor Localization</div>
+            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+              <a class="btn" href="#" style="background:linear-gradient(135deg,var(--primary),var(--accent)); color:#0b0c10;">Google Scholar</a>
+              <a class="btn" href="#" style="background:linear-gradient(135deg,var(--primary),var(--accent)); color:#0b0c10;">Homepage</a>
+              <a class="btn" href="#" style="background:linear-gradient(135deg,var(--primary),var(--accent)); color:#0b0c10;">Email</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid cols-3" style="margin-top:18px;">
+        <article class="card" data-animate="up"><h3>Geung-yo Oh</h3><p class="muted">AI융합학부 · CSI 기반 포즈/위치</p></article>
+        <article class="card" data-animate="up"><h3>Jiyeong Hong</h3><p class="muted">AI융합학부 · 데이터 엔지니어링</p></article>
+        <article class="card" data-animate="up"><h3>Jaehyun Yoo</h3><p class="muted">Advisor</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publications -->
+  <section id="publications" class="section">
+    <div class="container">
+      <h2 style="font-size:35px;" data-animate="up">Publications</h2>
+      <div class="card hover" data-animate="up">
+        <div class="pub" style="margin-bottom:14px;" data-animate="up">
+          <div class="meta" style="margin-bottom:5px;">2025 · Conference</div>
+          <div><strong>Position Estimatin Using WiFi CSI</strong></div>
+          <div><strong>WiFi CSI를 이용한 잠재적 위치 추론</strong></div>
+          <div class="muted" style="margin-top:5px; margin-bottom:10px;">Geung-yo Oh, Jiyeong Hong, Jaehyun Yoo</div>
+          <a class="href" style="text-align:right; margin-right:5px;" href="doc/[AI Lab] WiFi CSI를 이용한 잠재적 위치 추론.pdf" target="_blank" rel="noopener noreferrer">view paper</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="padding:28px 0; color:var(--muted); border-top:1px solid var(--line);">
+      © <span id="year"></span> <span id="labNameFooter">AI Lab</span> — All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Lightbox markup (single shared instance) -->
+  <div id="lightboxBackdrop" class="lightbox-backdrop" aria-hidden="true">
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button id="lbClose" class="lightbox-close" type="button" aria-label="Close">Close ✕</button>
+      <button id="lbPrev" class="lightbox-arrow lightbox-prev" type="button" aria-label="Previous">‹</button>
+      <div id="lbTrack" class="lightbox-track" aria-live="polite"></div>
+      <button id="lbNext" class="lightbox-arrow lightbox-next" type="button" aria-label="Next">›</button>
+    </div>
+  </div>
+
+  <script>
+    // Basic UI: year, mobile menu
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){
+      const menuBtn = document.querySelector('.menu-btn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if(!menuBtn || !mobileMenu) return;
+      menuBtn.addEventListener('click', ()=>{
+        const opened = mobileMenu.style.display === 'block';
+        mobileMenu.style.display = opened ? 'none' : 'block';
+        menuBtn.setAttribute('aria-expanded', String(!opened));
+      });
+      mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> {
+        mobileMenu.style.display = 'none';
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }));
+    })();
+
+    // IntersectionObserver for data-animate
+    (function(){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, {threshold:.18});
+      document.querySelectorAll('[data-stagger]').forEach(group=>{
+        Array.from(group.children).forEach((el,i)=>{ el.style.transitionDelay = (i*70)+'ms'; });
+      });
+      document.querySelectorAll('[data-animate]').forEach(el=> io.observe(el));
+    })();
+
+    // Navigation highlight: follow visual menu order (about -> news -> research -> member -> publications)
+    (function(){
+      const links = Array.from(document.querySelectorAll('header nav a'));
+      const sectionIds = ['about','news','research','member','publications'];
+      const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+      if(sections.length === 0) return;
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            const id = entry.target.id;
+            links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+id));
+          }
+        });
+      }, {rootMargin: '-35% 0px -55% 0px', threshold: .01});
+      sections.forEach(sec => io.observe(sec));
+    })();
+  </script>
+
+  <!-- Lightbox + News behaviors: delegated, robust binding -->
+  <script>
+  (function(){
+    // Elements
+    const backdrop = document.getElementById('lightboxBackdrop');
+    const track = document.getElementById('lbTrack');
+    const prevBtn = document.getElementById('lbPrev');
+    const nextBtn = document.getElementById('lbNext');
+    const closeBtn = document.getElementById('lbClose');
+    const newsSection = document.getElementById('news');
+    const newsWrap = newsSection ? newsSection.querySelector('.news-wrap') : null;
+    const viewMoreBtn = document.querySelector('#news .news-more') || document.querySelector('.news-more');
+
+    let images = [];
+    let currentIndex = 0;
+
+    function updateArrows(){
+      if(!prevBtn || !nextBtn) return;
+      prevBtn.classList.toggle('hidden', currentIndex <= 0);
+      nextBtn.classList.toggle('hidden', currentIndex >= images.length - 1);
+    }
+    function goto(idx){
+      if(!track) return;
+      currentIndex = Math.max(0, Math.min(images.length - 1, idx));
+      const offset = -currentIndex * 100;
+      track.style.transform = 'translateX(' + offset + '%)';
+      updateArrows();
+    }
+    function openLightbox(list, start){
+      if(!backdrop || !track) return;
+      images = list.slice();
+      // build slides
+      track.innerHTML = images.map(src => '<div class="lightbox-slide"><img src="'+src+'" alt=""></div>').join('');
+      backdrop.classList.add('open');
+      backdrop.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      goto(start || 0);
+      // focus close for accessibility
+      closeBtn && closeBtn.focus();
+    }
+    function closeLightbox(){
+      if(!backdrop || !track) return;
+      backdrop.classList.remove('open');
+      backdrop.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      track.innerHTML = '';
+      images = [];
+      currentIndex = 0;
+    }
+
+    // Delegated click on news images -> find news-item parent and its images
+    if(newsSection){
+      newsSection.addEventListener('click', function(e){
+        const img = e.target.closest('.photo-grid img');
+        if(!img) return;
+        // find news-item container
+        const item = img.closest('.news-item');
+        if(!item) return;
+        const imgs = Array.from(item.querySelectorAll('.photo-grid img'));
+        if(imgs.length === 0) return;
+        const urls = imgs.map(i => i.getAttribute('src'));
+        const idx = imgs.indexOf(img);
+        openLightbox(urls, idx);
+      });
+    }
+
+    // Prev/Next/Close handlers
+    prevBtn && prevBtn.addEventListener('click', ()=> goto(currentIndex - 1));
+    nextBtn && nextBtn.addEventListener('click', ()=> goto(currentIndex + 1));
+    closeBtn && closeBtn.addEventListener('click', closeLightbox);
+    backdrop && backdrop.addEventListener('click', function(e){
+      if(e.target === backdrop) closeLightbox();
+    });
+    document.addEventListener('keydown', function(e){
+      if(!backdrop || !backdrop.classList.contains('open')) return;
+      if(e.key === 'Escape') closeLightbox();
+      else if(e.key === 'ArrowLeft') goto(currentIndex - 1);
+      else if(e.key === 'ArrowRight') goto(currentIndex + 1);
+    });
+
+    // Ensure buttons visible/hide at bounds
+    updateArrows();
+
+    // View more toggle: button is outside news-wrap to avoid overlay; toggle class on news-wrap
+    if(viewMoreBtn && newsWrap){
+      // initial state collapsed
+      function setState(open){
+        newsWrap.classList.toggle('is-open', open);
+        viewMoreBtn.setAttribute('aria-expanded', String(open));
+        viewMoreBtn.textContent = open ? 'Show less' : 'View more';
+      }
+      setState(false);
+      viewMoreBtn.addEventListener('click', function(){
+        const nowOpen = newsWrap.classList.contains('is-open');
+        setState(!nowOpen);
+        // if collapsing, scroll to top of news to maintain context
+        if(nowOpen){
+          const top = newsSection.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({ top: Math.max(0, top - 80), behavior:'smooth' });
+        }
+      });
+    }
+  })();
+  </script>
+
+</body>
+</html>

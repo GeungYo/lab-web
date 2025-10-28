@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News Timeline + Card Grid</title>
+<style>
+  body {
+    background: #162229;
+    color: #e8f1f5;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 40px;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 20px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #6cc2ce, transparent 110%);
+  }
+
+  .news-item {
+    position: relative;
+    margin-bottom: 40px;
+    padding-left: 25px;
+  }
+
+  .news-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7ac1ff, #81ded8);
+  }
+
+  .news-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 16px 20px;
+    transition: background 0.3s ease;
+  }
+
+  .news-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .news-card h3 {
+    margin: 6px 0 12px;
+    font-size: 1.2rem;
+  }
+
+  .news-card time {
+    color: #a7b8c0;
+    font-size: 0.9rem;
+  }
+
+  .news-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .news-images img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .news-text {
+    margin-top: 10px;
+    color: #a7b8c0;
+    font-size: 0.95rem;
+  }
+</style>
+</head>
+<body>
+  <h2>Latest News</h2>
+
+  <div class="timeline">
+    <div class="news-item">
+      <div class="news-card">
+        <time>2025-10-22 ~ 2025-10-26</time>
+        <h3>Participated Korea Police World Expo</h3>
+        <div class="news-images">
+          <img src="https://picsum.photos/401/250" alt="Expo photo 1">
+          <img src="https://picsum.photos/402/250" alt="Expo photo 2">
+          <img src="https://picsum.photos/403/250" alt="Expo photo 3">
+        </div>
+        <p class="news-text">Our lab presented a demonstration of smart indoor localization and AI-based human safety technologies at the Korea Police World Expo 2025.</p>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-card">
+        <time>2024-05-24</time>
+        <h3>Award from KIPS Conference</h3>
+        <div class="news-images">
+          <img src="https://picsum.photos/405/250" alt="Award photo">
+        </div>
+        <p class="news-text">Received an academic excellence award for research on WiFi-based human pose estimation at the KIPS Undergraduate Paper Competition.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
