@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Research Cards — Clean Preview</title>
+  <style>
+    :root{
+      --bg:#17232b;
+      --panel:#0f151b;
+      --ink:#e6eef3;
+      --muted:#9fb2c1;
+      --primary:#7ac1ff;
+      --accent:#81ded8;
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink);
+      font:16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial;
+      background:
+        radial-gradient(900px 600px at 15% -10%, rgba(129,222,216,.12), transparent 40%),
+        radial-gradient(900px 600px at 90% 0%, rgba(122,193,255,.10), transparent 45%),
+        radial-gradient(800px 500px at 40% 30%, rgba(129,222,216,.10), transparent 50%),
+        radial-gradient(700px 600px at 65% 45%, rgba(129,222,216,.10), transparent 50%),
+        var(--bg);
+      background-repeat:no-repeat,no-repeat,no-repeat,no-repeat;
+    }
+    .wrap{padding:54px 0}
+    .inner{width:min(1200px,calc(100% - 48px)); margin:auto}
+    h2{margin:0 0 26px; font-weight:900; font-size:clamp(28px,3.2vw,40px); letter-spacing:.2px}
+
+    /* ====== CLEAN CARDS: no border, soft shadow, no glow ====== */
+    .grid{display:grid; gap:22px}
+    .card{
+      position:relative;
+      display:grid; grid-template-columns: 1.15fr 1fr;
+      border:none;                        /* ← 테두리 제거 */
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        rgba(12,18,24,.55);
+      /* 부드러운 그림자만 사용 */
+      box-shadow: 0 12px 28px rgba(0,0,0,.28), 0 4px 10px rgba(0,0,0,.18);
+      transition: transform .18s ease, box-shadow .22s ease, filter .22s ease;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.36), 0 8px 18px rgba(0,0,0,.20);
+      filter: saturate(1.02);
+    }
+
+    .info{padding:28px 26px}
+    .title{margin:0 0 10px; font-weight:800; font-size:clamp(22px,2.2vw,30px); letter-spacing:.2px}
+    .desc{margin:0 0 18px; color:var(--muted); font-size:clamp(14px,1.2vw,17px); line-height:1.7}
+    .tags{display:flex; flex-wrap:wrap; gap:10px}
+    .tag{
+      display:inline-flex; align-items:center; padding:8px 12px;
+      border-radius:999px; background:rgba(255,255,255,.06); /* 연한 캡슐, 선 없음 */
+      color:#cfe0ea; font-weight:650; font-size:13px; letter-spacing:.02em;
+    }
+
+    .media{
+      position:relative; min-height:260px;
+      background:
+        radial-gradient(120% 100% at 10% 0%, rgba(129,222,216,.10), rgba(0,0,0,.25)),
+        var(--panel);
+      /* 구분선도 제거 */
+      border-left:none;
+      overflow:hidden;
+    }
+    .media > img, .media > video{
+      width:100%; height:100%; object-fit:cover; display:block;
+      /* 깔끔하게 보이도록 약한 라운드와 그림자 */
+      transform: none;
+    }
+
+    /* 진입 애니메이션만 유지 */
+    .reveal{opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease}
+    .reveal.in{opacity:1; transform:none}
+
+    @media (max-width: 980px){
+      .card{grid-template-columns:1fr}
+      .media{order:-1; min-height:220px}
+      .info{padding:22px}
+    }
+    :focus-visible{outline:2px solid var(--primary); outline-offset:3px; border-radius:10px}
+  </style>
+</head>
+<body>
+<section class="wrap" id="research">
+  <div class="inner">
+    <h2>Research</h2>
+    <div class="grid">
+
+      <!-- 1) PPG-based Risk Detection -->
+      <article class="card reveal" tabindex="0" aria-label="PPG-based Risk Detection">
+        <div class="info">
+          <h3 class="title">PPG-based Risk Detection</h3>
+          <p class="desc">Detects physiological risk by inferring breath-holding, fear, and stress states from PPG signals in real time.</p>
+          <div class="tags">
+            <span class="tag">PPG Signals</span>
+            <span class="tag">Stress Detection</span>
+            <span class="tag">Physiological Monitoring</span>
+          </div>
+        </div>
+        <div class="media">
+          <video src="media/ppg.mp4" class="vid" muted playsinline loop preload="metadata" poster="media/ppg.jpg"></video>
+        </div>
+      </article>
+
+      <!-- 2) Geofencing-based Risk Detection -->
+      <article class="card reveal" tabindex="0" aria-label="Geofencing-based Risk Detection">
+        <div class="info">
+          <h3 class="title">Geofencing-based Risk Detection</h3>
+          <p class="desc">Detects risky situations by identifying route deviations from habitual paths and unsafe-zone entries using spatial context.</p>
+          <div class="tags">
+            <span class="tag">Spatial Analysis</span>
+            <span class="tag">Route Monitoring</span>
+            <span class="tag">Safety Zones</span>
+          </div>
+        </div>
+        <div class="media">
+          <video src="media/geofencing.mp4" class="vid" muted playsinline loop preload="metadata" poster="media/geofencing.jpg"></video>
+        </div>
+      </article>
+
+      <!-- 3) Wi-Fi CSI Sensing -->
+      <article class="card reveal" tabindex="0" aria-label="Wi-Fi CSI Sensing">
+        <div class="info">
+          <h3 class="title">Wi-Fi CSI Sensing</h3>
+          <p class="desc">Detects presence and atypical movement without wearables by analyzing RF channel variations, complementing on-body sensing.</p>
+          <div class="tags">
+            <span class="tag">RF Sensing</span>
+            <span class="tag">Contactless Detection</span>
+            <span class="tag">Movement Analysis</span>
+          </div>
+        </div>
+        <div class="media">
+          <img src="media/wifi-csi.jpg" alt="Wi-Fi CSI sensing illustration" loading="lazy">
+        </div>
+      </article>
+
+      <!-- 4) LLM-driven Situation Reasoning -->
+      <article class="card reveal" tabindex="0" aria-label="LLM-driven Situation Reasoning">
+        <div class="info">
+          <h3 class="title">LLM-driven Situation Reasoning</h3>
+          <p class="desc">Consolidates multimodal detections and history into operator-ready summaries and searchable reports for rapid response.</p>
+          <div class="tags">
+            <span class="tag">Multimodal AI</span>
+            <span class="tag">Report Generation</span>
+            <span class="tag">Situation Analysis</span>
+          </div>
+        </div>
+        <div class="media">
+          <video src="media/llm.mp4" class="vid" muted playsinline loop preload="metadata" poster="media/llm.jpg"></video>
+        </div>
+      </article>
+
+      <!-- 5) IMU-based Risk -->
+      <article class="card reveal" tabindex="0" aria-label="IMU-based Risk">
+        <div class="info">
+          <h3 class="title">IMU-based Risk</h3>
+          <p class="desc">Detects real-time physical risk by quantifying motion intensity and patterns from wearable accelerometers, enabling on-device severity estimation.</p>
+          <div class="tags">
+            <span class="tag">Motion Sensing</span>
+            <span class="tag">Risk Detection</span>
+            <span class="tag">Wearable Devices</span>
+          </div>
+        </div>
+        <div class="media">
+          <video src="img/police1.jpg" class="img" muted playsinline loop preload="metadata" poster="media/imu.jpg"></video>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  // 등장 애니메이션
+  const io = new IntersectionObserver((ents)=>{
+    ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // 비디오는 호버/포커스 때만 재생 (빛/글레어/틸트 없음)
+  document.querySelectorAll('.vid').forEach(v=>{
+    const play = ()=> v.play().catch(()=>{});
+    const pause= ()=> v.pause();
+    v.addEventListener('mouseenter', play);
+    v.addEventListener('focus',     play);
+    v.addEventListener('mouseleave',pause);
+    v.addEventListener('blur',      pause);
+  });
+</script>
+</body>
+</html>

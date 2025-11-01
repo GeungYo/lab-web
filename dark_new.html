@@ -129,8 +129,7 @@
     .mobile-menu a { display: block; padding: .7rem 0; color: var(--text); font-weight: 600; }
 
     /* =======================
-       HERO — 좌정렬 대형 타이포 + 오브글로우
-       (텍스트·카피 변경 없음)
+       HERO
     ========================*/
     .hero {
       min-height: calc(100svh - var(--header-h));
@@ -139,7 +138,6 @@
       position: relative;
     }
     .hero::before{
-      /* 좌측에 은은한 오브 라이트 */
       content:""; position:absolute; inset:0;
       background:
         radial-gradient(900px 600px at 10% 25%, rgba(129,222,216,.10), transparent 55%),
@@ -172,6 +170,7 @@
       text-shadow: 0 2px 22px rgba(130,228,222,.12);
     }
     .hero .sub{
+      /* ✅ 오타 수정 */
       color: var(--muted);
       font-size: clamp(1rem, .8vw + .7rem, 1.25rem);
       margin-top: 4px;
@@ -227,6 +226,8 @@
     .news-item time { color: var(--muted); font-size: .92rem; }
     .news img { border-radius: 10px; box-shadow: var(--shadow); }
 
+    .news-item > div > div { display: flow-root; }
+
     /* 스크롤 애니메이션 */
     [data-animate]{ opacity: 0; transform: translateY(10px);
       transition: opacity .6s var(--ease-out), transform .6s var(--ease-out), filter .6s var(--ease-out);
@@ -235,6 +236,72 @@
     [data-animate="up"]{ transform: translateY(16px); }
     [data-animate="scale"]{ transform: scale(.98); }
     [data-stagger] > * { will-change: opacity, transform; }
+
+    /* === Research — borderless cards + media === */
+    .research-grid{display:grid;gap:22px}
+    .r-card{
+      position:relative;
+      display:grid;grid-template-columns:1fr;gap:18px;
+      padding:24px 22px;border-radius:var(--radius);
+      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+      box-shadow:var(--shadow);
+      transition:transform .18s var(--ease-out), box-shadow .18s var(--ease-out);
+    }
+    .r-card:hover{transform:translateY(-2px); box-shadow:0 18px 40px rgba(2,6,23,.32)}
+    .r-card .title{margin:0 0 .4rem;font-size:clamp(1.25rem,1.1vw + 1rem,1.6rem);font-weight:800}
+    .r-card .desc{color:var(--muted);font-size:clamp(.98rem,.7vw + .8rem,1.05rem);line-height:1.6}
+    .r-card .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:12px}
+    .r-card .chip{
+      padding:.45rem .7rem;border-radius:999px;
+      font-weight:650;font-size:.9rem;letter-spacing:.1px;
+      background:rgba(255,255,255,.06);
+    }
+    .r-card .media{
+      position:relative;            /* ➜ 슬라이더 버튼 배치용 */
+      border-radius:14px;overflow:hidden;
+      background:#0d1318; aspect-ratio:16/9;
+      box-shadow:0 10px 26px rgba(0,0,0,.28) inset, 0 8px 18px rgba(0,0,0,.25);
+    }
+    /* 기존 직접 자식도 지원(호환) */
+    .r-card .media > img{object-fit:contain;display:block}
+    .r-card .media > video{width:100%;height:100%;object-fit:contain;display:block}
+
+    /* ➜ 미디어 슬라이더 구조 스타일 (JS가 .c-* 래퍼 생성) */
+    .r-card .media .c-viewport{width:100%;height:100%;overflow:hidden}
+    .r-card .media .c-track{display:flex;width:100%;height:100%;transition:transform .45s var(--ease-in-out)}
+    .r-card .media .c-slide{flex:0 0 100%;height:100%}
+    .r-card .media .c-slide > img,
+    .r-card .media .c-slide > video{width:100%;height:100%;object-fit:cover;display:block}
+
+    .r-card .media .c-nav{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:38px;height:38px;border-radius:999px;display:grid;place-items:center;
+      background:rgba(31, 54, 51, 0.55); color:var(--text);
+      border:none; cursor:pointer; user-select:none;
+      backdrop-filter: blur(6px);
+    }
+    .r-card .media .c-nav.prev{left:10px}
+    .r-card .media .c-nav.next{right:10px}
+    .r-card .media .c-nav:hover{background:rgba(255,255,255,.08)}
+    .r-card .media .c-nav[disabled]{opacity:.35;pointer-events:none}
+
+    .r-card .media .c-pager{
+      position:absolute; right:12px; bottom:10px;
+      font-size:.85rem; color:#f2fefe;
+      background:rgba(35, 54, 51, 0.394); 
+      border-radius:999px; padding:.2rem .55rem; backdrop-filter: bl
+      ur(4px);
+    }
+    .r-card .media.dragging .c-track{transition:none;cursor:grabbing}
+
+    /* 좌우 2열 배치 + 지그재그 */
+    @media (min-width: 920px){
+      .research-grid{gap:24px}
+      .r-card{grid-template-columns:1.15fr .85fr;align-items:center;padding:28px}
+      .r-card.swap{grid-template-columns:.85fr 1.15fr}
+      .r-card.swap .txt{order:2}
+      .r-card.swap .media{order:1}
+    }
 
     /* 반응형 */
     @media (min-width: 768px) {
@@ -259,20 +326,67 @@
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
     }
-      /* News collapse (design only) */
+
+    /* News collapse (design only) */
     :root { --news-collapsed: 980px; }
     .news-wrap{ position: relative; max-height: var(--news-collapsed); overflow: hidden; }
     .news-wrap::after{
-      content:""; position:absolute; left:0; right:0; bottom:0; height: 180px;;
-      background: linear-gradient(to bottom, rgba(25,39,46,0), rgba(25,39,46,.6) 45%, rgba(25,39,46,.92) 95%);
+      content:""; position:absolute; left:0; right:0; bottom:0; height: 180px;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25,39,46,.6) 45%, rgba(25,39,46,.92) 95%);
       backdrop-filter: blur(4px) saturate(120%);
       -webkit-backdrop-filter: blur(4px) saturate(120%);
+      pointer-events: none;
     }
-
     .news-wrap.is-open{ max-height: none; }
     .news-wrap.is-open::after{ opacity: 0; }
     .news-more{ position:absolute; left:50%; transform:translateX(-50%); bottom:18px; z-index:2; }
     .news-wrap.is-open .news-more{ position:static; transform:none; margin:16px auto 0; display:inline-flex; }
+  
+  /* === About: 무한 마키(회전) === */
+    .about-marquee{
+      --gap: 18px;
+      position: relative;
+      margin-top: 22px;
+      overflow: hidden;
+      /* 좌우 페이드 마스크로 ‘회전’ 느낌 강조 */
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    }
+    .about-marquee::before,
+    .about-marquee::after{
+      content:"";
+      position:absolute; top:0; bottom:0; width:72px; pointer-events:none;
+      background: linear-gradient(to right, var(--bg), rgba(0,0,0,0));
+      z-index: 2;
+    }
+    .about-marquee::after{ right:0; transform: scaleX(-1); }
+    .about-marquee::before{ left:0; }
+
+    .about-track{
+      display:flex;
+      gap: var(--gap);
+      align-items: stretch;
+      will-change: transform;
+      animation: about-marquee var(--about-duration, 40s) linear infinite;
+    }
+    .about-marquee:hover .about-track{ animation-play-state: paused; } /* hover 시 일시정지 */
+
+    .about-card{
+      flex: 0 0 clamp(260px, 34vw, 520px);
+      /* 기존 .card 스타일을 그대로 쓰되, 흐름에 맞게 최소 폭만 지정 */
+    }
+
+    @keyframes about-marquee{
+      from{ transform: translateX(0); }
+      to  { transform: translateX(calc(-50% - var(--gap)/2)); } /* 콘텐츠 2배 구성(원본+복제) 기준 */
+    }
+
+    /* 접근성: 모션 최소화 설정 시 정지 + 자동 줄바꿈 */
+    @media (prefers-reduced-motion: reduce){
+      .about-track{ animation: none !important; flex-wrap: wrap; }
+      .about-marquee::before, .about-marquee::after{ display:none; }
+    }
+
   </style>
 </head>
 <body>
@@ -294,7 +408,6 @@
       <a href="#research">Research</a>
       <a href="#member">Member</a>
       <a href="#publications">Publications</a>
-
     </div>
   </header>
 
@@ -323,43 +436,173 @@
     <!-- 소개 -->
     <section id="about" class="section">
       <div class="container">
-        <div>
-          <h2 style="font-size: 35px; text-align: center" data-animate="up">About</h2>
-          <p class="muted" style="text-align: center;" data-animate="up">Our lab explores how sensing and intelligence converge to understand humans and their environment. We design multimodal systems that integrate wearable, physiological, and environmental data with AI models — creating technology that perceives the world intelligently.</p>
-          <div class="grid cols-3" style="gap:22px; margin-top:40px" data-stagger>
-            <article class="card" data-animate="up">
-              <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg></div>
+        <h2 style="font-size: 35px; text-align: center">About</h2>
+        <p class="muted" style="text-align: center;">
+          Our lab explores how sensing and intelligence converge to understand humans and their environment.
+          We design multimodal systems that integrate wearable, physiological, and environmental data with AI models —
+          creating technology that perceives the world intelligently.
+        </p>
+
+        <!-- ▶▶ 무한 마키(회전) 레일 시작: 기존 카드들을 트랙 안에 배치합니다 -->
+        <div class="about-marquee" data-speed="200">
+          <div class="about-track">
+            <!-- 기존 About 카드 4개를 그대로 여기로 옮겨주세요 -->
+            <article class="card about-card">
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                  <circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/>
+                </svg>
+              </div>
               <h3>Multimodal Sensing</h3>
-              <p class="muted">Integrating IMU, PPG, Wi-Fi CSI, and location data to understand human behavior and context.</p>
+              <p class="muted">IMU·PPG·Wi-Fi CSI·위치 등 서로 다른 신호를 결합해 사람과 맥락을 해석합니다.</p>
             </article>
-            <article class="card" data-animate="up">
-              <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+
+            <article class="card about-card">
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                  <rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/>
+                </svg>
+              </div>
               <h3>On-device Intelligence</h3>
-              <p class="muted">Developing lightweight AI models for real-time inference on wearables and mobile devices.</p>
+              <p class="muted">웨어러블/모바일에서 실시간 추론 가능한 경량 모델을 설계합니다.</p>
             </article>
-            <article class="card" data-animate="up">
-              <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 12a4 4 0 110-8 4 4 0 010 8z"/><path d="M4 20a 8 8 0 1116 0"/></svg></div>
+
+            <article class="card about-card">
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                  <path d="M12 12a4 4 0 110-8 4 4 0 010 8z"/><path d="M4 20a8 8 0 1116 0"/>
+                </svg>
+              </div>
               <h3>Human-centered Research</h3>
-              <p class="muted">Designing technologies that improve human safety, health, and everyday experience.</p>
+              <p class="muted">안전·건강·일상 경험을 개선하는 인간 중심 기술을 만듭니다.</p>
             </article>
-            <article class="card" data-animate="up">
-              <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v18M3 12h18" opacity=".25"/><path d="M8 8h8v8H8z"/></svg></div>
-              <h3>AI & Reasoning</h3>
-              <p class="muted">Leveraging LLMs and machine learning to interpret multimodal signals intelligently.</p>
+
+            <article class="card about-card">
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                  <path d="M12 3v18M3 12h18" opacity=".25"/><path d="M8 8h8v8H8z"/>
+                </svg>
+              </div>
+              <h3>AI &amp; Reasoning</h3>
+              <p class="muted">LLM과 ML을 활용해 멀티모달 관측을 논리적으로 요약·설명합니다.</p>
             </article>
+            <!-- ▲▲ 여기까지가 원래 있던 4개 카드 -->
           </div>
         </div>
+        <!-- 무한 마키(회전) 레일 끝 -->
       </div>
     </section>
+
 
     <!-- Research -->
     <section id="research" class="section">
       <div class="container">
-        <h2 style="font-size: 35px;">Research</h2>
-        <div class="grid cols-3">
-          <article class="card"><h3>Wi-Pose Dataset 정제</h3><p class="muted">파이프라인 정리, 레이블 품질관리, 재현 스크립트 제공.</p></article>
-          <article class="card"><h3>멀티태스크 네트워크</h3><p class="muted">포즈 회귀 + 구간 분류 + 프레임 프레즌스 예측.</p></article>
-          <article class="card"><h3>실험 자동화</h3><p class="muted">로깅/시각화 템플릿, 체크포인트·리플레이 관리.</p></article>
+        <h2 style="font-size: 35px;">Research Areas</h2>
+
+        <div class="research-grid">
+
+          <!-- 1. PPG-based Risk Detection -->
+          <article class="r-card" data-animate="up">
+            <div class="txt">
+              <h3 class="title">PPG-based Risk Detection</h3>
+              <p class="desc">
+                Detects physiological risk by inferring breath-holding, fear, and stress states
+                from PPG signals in real time.
+              </p>
+              <div class="chips">
+                <span class="chip">PPG Signals</span>
+                <span class="chip">Stress Detection</span>
+                <span class="chip">Physiological Monitoring</span>
+              </div>
+            </div>
+            <div class="media">
+              <video src="research/ppg1.MP4" playsinline muted loop controls></video>
+              <img src="research/ppg2.jpg" alt="PPG visualization" style="object-fit: contain;">
+              <img src="research/ppg3.jpg" alt="PPG visualization" style="object-fit: contain;">
+
+            </div>
+          </article>
+
+          <!-- 2. Geofencing-based Risk Detection -->
+          <article class="r-card swap" data-animate="up">
+            <div class="txt">
+              <h3 class="title">Geofencing-based Risk Detection</h3>
+              <p class="desc">
+                Detects risky situations by identifying route deviations from habitual paths
+                and unsafe-zone entries using spatial context.
+              </p>
+              <div class="chips">
+                <span class="chip">Spatial Analysis</span>
+                <span class="chip">Route Monitoring</span>
+                <span class="chip">Safety Zones</span>
+              </div>
+            </div>
+            <div class="media">
+              <!-- <video src="src/geofence_demo.mp4" playsinline muted loop controls></video>
+              <img src="img/geofence_map.png" alt="Geofence map"> -->
+            </div>
+          </article>
+
+          <!-- 3. Wi-Fi CSI Sensing -->
+          <article class="r-card" data-animate="up">
+            <div class="txt">
+              <h3 class="title">Wi-Fi CSI Sensing</h3>
+              <p class="desc">
+                Detects presence and atypical movement without wearables by analyzing RF
+                channel variations, complementing on-body sensing.
+              </p>
+              <div class="chips">
+                <span class="chip">RF Sensing</span>
+                <span class="chip">Contactless Detection</span>
+                <span class="chip">Movement Analysis</span>
+              </div>
+            </div>
+            <div class="media">
+              <!-- <video src="src/csi_demo.mp4" playsinline muted loop controls></video>
+              <img src="img/csi_heatmap.jpg" alt="CSI heatmap"> -->
+            </div>
+          </article>
+
+          <!-- 4. LLM-driven Situation Reasoning -->
+          <article class="r-card swap" data-animate="up">
+            <div class="txt">
+              <h3 class="title">LLM-driven Situation Reasoning</h3>
+              <p class="desc">
+                Consolidates multimodal detections and history into operator-ready
+                summaries and searchable reports for rapid response.
+              </p>
+              <div class="chips">
+                <span class="chip">Multimodal AI</span>
+                <span class="chip">Report Generation</span>
+                <span class="chip">Situation Analysis</span>
+              </div>
+            </div>
+            <div class="media">
+              <!-- <video src="src/llm_reasoning.mp4" playsinline muted loop controls></video>
+              <img src="img/report_ui.png" alt="Report UI"> -->
+            </div>
+          </article>
+
+          <!-- 5. IMU-based Risk -->
+          <article class="r-card" data-animate="up">
+            <div class="txt">
+              <h3 class="title">IMU-based Risk</h3>
+              <p class="desc">
+                Detects real-time physical risk by quantifying motion intensity and patterns
+                from wearable accelerometers, enabling severity estimation on device.
+              </p>
+              <div class="chips">
+                <span class="chip">Motion Sensing</span>
+                <span class="chip">Risk Detection</span>
+                <span class="chip">Wearable Devices</span>
+              </div>
+            </div>
+            <div class="media">
+              <!-- <video src="src/imu_risk.mp4" playsinline muted loop controls></video>
+              <img src="img/imu_plot.png" alt="IMU plot"> -->
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
@@ -369,37 +612,34 @@
       <div class="container">
         <h2 style="font-size: 35px;" data-animate="up">Latest News</h2>
         <div class="news-wrap" data-collapsible>
-        <div class="news" data-stagger>
-            
-          <!-- 치안 박람회 -->
-          <div class="news-item" data-animate="up">
-            <time datetime="2025-10-01">2025-10-22 ~ 2025-10-26</time>
-            <div style="margin-bottom: 10px; ">Participated Korea Police World Expo</div>
+          <div class="news" data-stagger>
+            <!-- 치안 박람회 -->
+            <div class="news-item" data-animate="up">
+              <time datetime="2025-10-01">2025-10-22 ~ 2025-10-26</time>
+              <div style="margin-bottom: 10px;">Participated Korea Police World Expo</div>
               <div>
-                  <div>
-                          <img style="width: 200px; float:left; margin-right: 10px;" src="img/police1.jpg">
-                          <img style="width: 200px; float:left; margin-right: 10px" src="img/police3.jpg">
-                          <img style="width: 350px; float:left; margin-right: 10px;" src="img/police2.jpg">
-                  </div>
+                <div>
+                  <img style="width: 200px; float:left; margin-right: 10px;" src="img/police1.jpg" alt="">
+                  <img style="width: 200px; float:left; margin-right: 10px" src="img/police3.jpg" alt="">
+                  <img style="width: 350px; float:left; margin-right: 10px;" src="img/police2.jpg" alt="">
+                </div>
               </div>
             </div>
-          <!-- 상장 -->            
-          <div class="news-item" data-animate="up">
-            <time datetime="2025-10-01">2024-05-24</time>
-            <div style="margin-bottom: 10px; ">Participated Korea Police World Expo</div>
+            <!-- 상장 -->
+            <div class="news-item" data-animate="up">
+              <time datetime="2025-10-01">2024-05-24</time>
+              <div style="margin-bottom: 10px;">Participated Korea Police World Expo</div>
               <div>
-                  <div>
-                          <img style="width: 200px; float:left; margin-right: 10px;" src="img/한국정보처리학회 2024 학부생 논문경진대회상_황규원_240709_095616_1.png">
+                <div>
+                  <img style="width: 200px; float:left; margin-right: 10px;" src="img/한국정보처리학회 2024 학부생 논문경진대회상_황규원_240709_095616_1.png" alt="">
+                </div>
               </div>
-            </div>                       
+            </div>
           </div>
-        </div>
           <button class="btn ghost news-more" type="button" aria-expanded="false">View more</button>
         </div>
       </div>
     </section>
-
-
 
     <!-- Member -->
     <section id="member" class="section">
@@ -419,7 +659,7 @@
                 <a href="https://home.ipinlabs.com/ko/" target="_blank" rel="noopener"
                   style="display:inline-flex; align-items:center; gap:8px; padding:0; border:0; background:transparent; box-shadow:none; color:#4d7d92; text-decoration:underline; font-weight:550; font-size:14px; margin-left:0;">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" style="flex:0 0 16px; fill:#7fb1cc; margin-top:3px;">
-                    <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855q-.215.403-.395.872c.705.157 1.472.257 2.282.287zM4.249 3.539q.214-.577.481-1.078a7 7 0 0 1 .597-.933A7 7 0 0 0 3.051 3.05q.544.277 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9 9 0 0 1-1.565-.667A6.96 6.96 0 0 0 1.018 7.5zm1.4-2.741a12.3 12.3 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332M8.5 5.09V7.5h2.99a12.3 12.3 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.6 13.6 0 0 1 7.5 10.91V8.5zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741zm-3.282 3.696q.18.469.395.872c.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a7 7 0 0 1-.598-.933 9 9 0 0 1-.481-1.079 8.4 8.4 0 0 0-1.198.49 7 7 0 0 0 2.276 1.522zm-1.383-2.964A13.4 13.4 0  0 1 3.508 8.5h-2.49a6.96 6.96 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667m6.728 2.964a7 7 0 0 0 2.275-1.521 8.4 8.4 0  0 0-1.197-.49 9  9 0 0 1-.481 1.078 7  7 0 0 1-.597.933M8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855q.216-.403.395-.872A12.6 12.6 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.96 6.96 0 0 0 14.982 8.5h-2.49a13.4 13.4 0 0 1-.437 3.008M14.982 7.5a6.96 6.96 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008zM11.27 2.461q.266.502.482 1.078a8.4 8.4 0 0 0 1.196-.49 7 7 0 0 0-2.275-1.52c.218.283.418.597.597.932m-.488 1.343a8 8 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z"/>
+                    <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855q-.215.403-.395.872c.705.157 1.472.257 2.282.287zM4.249 3.539q.214-.577.481-1.078a7 7 0 0 1 .597-.933A7 7 0 0 0 3.051 3.05q.544.277 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9 9 0 0 1-1.565-.667A6.96 6.96 0 0 0 1.018 7.5zm1.4-2.741a12.3 12.3 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332M8.5 5.09V7.5h2.99a12.3 12.3 0 0 0-.399-2.741c-.808 .187-1.681 .301-2.591 .332zM4.51 8.5c.035 .987 .176 1.914 .399 2.741A13.6 13.6 0 0 1 7.5 10.91V8.5zm3.99 0v2.409c.91 .03 1.783 .145 2.591 .332 .223 -.827 .364 -1.754 .4 -2.741zm-3.282 3.696 q .18 .469 .395 .872 c .552 1.035 1.218 1.65 1.887 1.855 V11.91 c -.81 .03 -1.577 .13 -2.282 .287zm.11 2.276 a7 7 0 0 1 -.598 -.933 9 9 0 0 1 -.481 -1.079 8.4 8.4 0 0 0 -1.198 .49 7 7 0 0 0 2.276 1.522zm-1.383 -2.964 A13.4 13.4 0 0 1 3.508 8.5 h -2.49 a6.96 6.96 0 0 0 1.362 3.675 c .47 -.258 .995 -.482 1.565 -.667 m6.728 2.964 a7 7 0 0 0 2.275 -1.521 8.4 8.4 0 0 0 -1.197 -.49 9  9 0 0 1 -.481 1.078 7  7 0 0 1 -.597 .933 M8.5 11.909 v 3.014 c .67 -.204 1.335 -.82 1.887 -1.855 q .216 -.403 .395 -.872 A12.6 12.6 0 0 0 8.5 11.91 zm 3.555 -.401 c .57 .185 1.095 .409 1.565 .667 A6.96 6.96 0 0 0 14.982 8.5 h -2.49 a13.4 13.4 0 0 1 -.437 3.008 M14.982 7.5 a6.96 6.96 0 0 0 -1.362 -3.675 c -.47 .258 -.995 .482 -1.565 .667 .248 .92 .4 1.938 .437 3.008 z M11.27 2.461 q .266 .502 .482 1.078 a8.4 8.4 0 0 0 1.196 -.49 7 7 0 0 0 -2.275 -1.52 c .218 .283 .418 .597 .597 .932 m -.488 1.343 a8 8 0 0 0 -.395 -.872 C9.835 1.897 9.17 1.282 8.5 1.077 V4.09 c .81 -.03 1.577 -.13 2.282 -.287 z"/>
                   </svg>
                   <span>IPIN LABS</span>
                 </a>
@@ -430,6 +670,7 @@
 
         <!-- UG -->
         <div class="grid people" style="margin-top: 30px;" data-stagger>
+          <!-- 이하 멤버 카드들 동일 -->
           <!--김하정-->
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
@@ -637,7 +878,7 @@
 
       const cards = document.querySelectorAll('.card');
       cards.forEach(card=>{
-        card.classList.add('_tilt');
+        card.classList? card.classList.add('_tilt') : null;
         let raf = null;
         const onMove = (e)=>{
           if(raf) return;
@@ -683,24 +924,162 @@
 
       sections.forEach(sec => io.observe(sec));
     })();
-      /* News collapse toggle (design-only) */
+
+    /* News collapse toggle — 안정화 */
     (()=>{
       const wrap = document.querySelector('.news-wrap');
       if(!wrap) return;
       const btn = wrap.querySelector('.news-more');
+
       const check = ()=>{
         const over = wrap.scrollHeight > wrap.clientHeight + 2;
         btn.style.display = (over || wrap.classList.contains('is-open')) ? 'inline-flex' : 'none';
       };
+
       check();
-      window.addEventListener('resize', ()=>{ if(!wrap.classList.contains('is-open')) check(); });
+
+      let rAF = null;
+      window.addEventListener('resize', ()=>{
+        if (wrap.classList.contains('is-open')) return;
+        if (rAF) cancelAnimationFrame(rAF);
+        rAF = requestAnimationFrame(check);
+      });
+
+      wrap.querySelectorAll('img').forEach(img=>{
+        if (img.complete) return;
+        img.addEventListener('load', check, { once: true });
+        img.addEventListener('error', check, { once: true });
+      });
+
       btn.addEventListener('click', ()=>{
         const open = wrap.classList.toggle('is-open');
         btn.setAttribute('aria-expanded', String(open));
         btn.textContent = open ? 'Show less' : 'View more';
-        check();
+        if(!open){
+          wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          requestAnimationFrame(check);
+        }
       });
     })();
+
+    /* ============================
+       Research 미디어 슬라이더 (비디오+이미지)
+       ✔ 화살표 버튼으로만 이동 (드래그/스와이프/키보드 이동 제거)
+       - .r-card .media 내부의 <video>/<img>들을 슬라이드로 래핑
+       - 1/N 표시, 좌우 버튼
+       - 슬라이드가 1개면 컨트롤 자동 숨김
+       - 활성 슬라이드 비디오만 재생
+    ============================ */
+    (function(){
+      const medias = Array.from(document.querySelectorAll('.r-card .media'));
+      medias.forEach(media => {
+        // 유효한 미디어만 수집
+        const rawKids = Array.from(media.children).filter(node => {
+          const tag = node.tagName?.toLowerCase();
+          if (tag !== 'video' && tag !== 'img') return false;
+          const src = node.getAttribute('src');
+          return !!(src && src.trim().length);
+        });
+
+        if (rawKids.length === 0) return;
+
+        // 래퍼 생성
+        const viewport = document.createElement('div');
+        viewport.className = 'c-viewport';
+        const track = document.createElement('div');
+        track.className = 'c-track';
+        viewport.appendChild(track);
+
+        // 기존 미디어를 슬라이드로 이동
+        rawKids.forEach(el => {
+          const slide = document.createElement('div');
+          slide.className = 'c-slide';
+          slide.appendChild(el);
+          track.appendChild(slide);
+        });
+
+        // 기존 내용 비우고 슬라이더 삽입
+        media.innerHTML = '';
+        media.appendChild(viewport);
+
+        const count = rawKids.length;
+        let index = 0;
+
+        // 컨트롤 (슬라이드가 1개면 만들지 않음)
+        let prevBtn, nextBtn, pager;
+        if (count > 1) {
+          prevBtn = document.createElement('button');
+          prevBtn.className = 'c-nav prev';
+          prevBtn.setAttribute('aria-label', 'Previous');
+          prevBtn.innerHTML = '&#8592;';
+
+          nextBtn = document.createElement('button');
+          nextBtn.className = 'c-nav next';
+          nextBtn.setAttribute('aria-label', 'Next');
+          nextBtn.innerHTML = '&#8594;';
+
+          pager = document.createElement('div');
+          pager.className = 'c-pager';
+
+          media.appendChild(prevBtn);
+          media.appendChild(nextBtn);
+          media.appendChild(pager);
+        }
+
+        function syncTrack() {
+          track.style.transform = `translateX(${-index * 100}%)`;
+          if (pager) pager.textContent = `${index + 1} / ${count}`;
+          if (prevBtn) prevBtn.disabled = index === 0;
+          if (nextBtn) nextBtn.disabled = index === count - 1;
+        }
+
+        function syncVideoPlayback() {
+          const slides = Array.from(track.children);
+          slides.forEach((slide, i) => {
+            const v = slide.querySelector('video');
+            if (!v) return;
+            if (i === index) {
+              v.play().catch(()=>{ /* ignore autoplay block */ });
+            } else {
+              v.pause();
+            }
+          });
+        }
+
+        function go(to) {
+          index = Math.max(0, Math.min(count - 1, to));
+          syncTrack();
+          syncVideoPlayback();
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', () => go(index - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => go(index + 1));
+
+        // ✔ 드래그/스와이프/키보드 이동 제거 (의도적으로 미구현)
+
+        // 초기 sync
+        syncTrack();
+        syncVideoPlayback();
+      });
+    })();
+    (function(){
+    const marquee = document.querySelector('#about .about-marquee');
+    const track   = document.querySelector('#about .about-track');
+    if(!marquee || !track) return;
+
+    // 콘텐츠 한 번 더 복제해서 2배 길이로 만들어 끊김 없이 순환
+    track.innerHTML = track.innerHTML + track.innerHTML;
+
+    // 속도(px/s)에 따라 전체 길이만큼 도는 시간 자동 계산
+    const speedPxPerSec = Number(marquee.getAttribute('data-speed') || 90);
+    // 브라우저 레이아웃 계산 이후에 길이 측정
+    requestAnimationFrame(() => {
+      const totalWidth = track.scrollWidth;    // 복제 포함한 총 길이
+      const duration = totalWidth / speedPxPerSec;
+      track.style.setProperty('--about-duration', `${duration}s`);
+    });
+  })();
   </script>
 </body>
 </html>
