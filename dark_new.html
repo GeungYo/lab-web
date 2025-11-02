@@ -203,11 +203,42 @@
     }
     @media (min-width: 721px) { .card.person > div { flex-direction: row; } }
 
-    /* 출판 */
+    /* 출판 (기존 스타일) */
     .pub { background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
-    .pub .meta { color: var(--muted); font-size: .95rem; }
     .href{ padding:0; border:none; border-radius:0; background:transparent; box-shadow:none; color:#8cd5ff; text-decoration:underline; font-weight:650; }
     .href:hover{ text-decoration:none; opacity:.9; }
+
+    /* === Publications (year & locale) === */
+    .year-row{
+      display:flex; align-items:center; gap:12px;
+      margin: 22px 0 12px;
+    }
+    .year-row .year{
+      font-size: 1.4rem; font-weight: 900; color: #b9cbd7; opacity:.6; letter-spacing:.3px;
+      white-space: nowrap;
+    }
+    .year-row .rule{
+      height: 2px; flex: 1 1 auto;
+      background: linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border-radius: 2px;
+    }
+    .pub .meta{
+      display:flex; align-items:center; gap:.5rem;
+      color: var(--muted);
+      font-size: .95rem;
+      margin-bottom: 5px;
+    }
+    .pub-tag{
+      display:inline-flex; align-items:center; gap:.35rem;
+      padding:.2rem .55rem; border-radius:999px; font-weight:700; letter-spacing:.1px;
+      border: 1px solid transparent;
+    }
+    .pub-tag.intl{
+      color:#bfeaff; background: rgba(122,193,255,.12); border-color: rgba(122,193,255,.25);
+    }
+    .pub-tag.domestic{
+      color:#c6f6f1; background: rgba(129,222,216,.12); border-color: rgba(129,222,216,.25);
+    }
 
     /* News 타임라인 */
     .news { display: grid; gap: 14px; position: relative; }
@@ -673,8 +704,7 @@
 
         <!-- UG -->
         <div class="grid people" style="margin-top: 30px;" data-stagger>
-          <!-- 이하 UG 멤버 카드들 (생략 없이 그대로 유지) -->
-          <!-- ... 기존 멤버 카드들 ... -->
+          <!-- UG 멤버 카드들 (생략 없이 유지) -->
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/하정.jpg" alt="UG profile" width="100" height="125" />
@@ -796,19 +826,16 @@
           </div>
         </div>
 
-        <!-- ===== 구분선 + Alumni 섹션 추가 ===== -->
+        <!-- ===== 구분선 + Alumni 섹션 ===== -->
         <div class="section-divider" aria-hidden="true">
           <span>Alumni</span>
           <div class="bar"></div>
         </div>
 
         <div class="grid people" data-stagger>
-          <!-- 기본 프로필 SVG data URL (필요시 src를 이미지 경로로 교체 가능) -->
-          <!-- 유소희 -->
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left:7px;">
-              <img alt="Alumni profile"
-                   width="100" height="125"
+              <img alt="Alumni profile" width="100" height="125"
                    src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
               <div>
                 <h4>Sohee Yoo</h4>
@@ -819,11 +846,9 @@
             </div>
           </div>
 
-          <!-- Alumni 2 -->
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left:7px;">
-              <img alt="Alumni profile"
-                   width="100" height="125"
+              <img alt="Alumni profile" width="100" height="125"
                    src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
               <div>
                 <h4>Alumni Name 2</h4>
@@ -834,11 +859,9 @@
             </div>
           </div>
 
-          <!-- Alumni 3 -->
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left:7px;">
-              <img alt="Alumni profile"
-                   width="100" height="125"
+              <img alt="Alumni profile" width="100" height="125"
                    src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
               <div>
                 <h4>Alumni Name 3</h4>
@@ -858,22 +881,42 @@
     <section id="publications" class="section">
       <div class="container">
         <h2 style="font-size: 35px;" data-animate="up">Publications</h2>
+
+        <!-- 2025 그룹 -->
+        <div class="year-row" aria-hidden="true">
+          <span class="year">2025</span>
+          <div class="rule"></div>
+        </div>
+
         <div class="card hover" data-animate="up">
-          <div class="pub" style="margin-bottom: 14px;" data-animate="up">
-            <div class="meta" style="margin-bottom: 5px;">2025 · Conference</div>
+          <!-- 예: 국제 학회 -->
+          <div class="pub" style="margin-bottom: 14px;">
+            <div class="meta">
+              <span class="pub-tag intl" title="International venue">International</span>
+              <span>2025 · Conference</span>
+            </div>
             <div><strong>Position Estimatin Using WiFi CSI</strong></div>
             <div><strong>WiFi CSI를 이용한 잠재적 위치 추론</strong></div>
             <div class="muted" style="margin-top: 5px; margin-bottom: 10px;">Geung-yo Oh, Jiyeong Hong, Jaehyun Yoo</div>
-            <a class="href" style="text-align: right; margin-right: 15px; color:#b4edfc;" href="src/WiFi CSI를 이용한 잠재적 위치 추론.pdf" target="_blank" rel="noopener noreferrer">view paper</a>
+            <a class="href" style="text-align: right; margin-right: 15px; color:#b4edfc;"
+               href="src/WiFi CSI를 이용한 잠재적 위치 추론.pdf" target="_blank" rel="noopener noreferrer">view paper</a>
           </div>
-          <div class="pub" style="margin-bottom: 14px;" data-animate="up">
-            <div class="meta" style="margin-bottom: 5px;">2025 · Conference</div>
+
+          <!-- 예: 국내 학회/학술지 -->
+          <div class="pub">
+            <div class="meta">
+              <span class="pub-tag domestic" title="Domestic venue">Domestic</span>
+              <span>2025 · Conference</span>
+            </div>
             <div><strong>Position Estimatin Using WiFi CSI</strong></div>
             <div><strong>WiFi CSI를 이용한 잠재적 위치 추론</strong></div>
             <div class="muted" style="margin-top: 5px; margin-bottom: 10px;">Geung-yo Oh, Jiyeong Hong, Jaehyun Yoo</div>
-            <a class="href" style="text-align: right; margin-right: 15px; color:#b4edfc;" href="src/WiFi CSI를 이용한 잠재적 위치 추론.pdf" target="_blank" rel="noopener noreferrer">view paper</a>
+            <a class="href" style="text-align: right; margin-right: 15px; color:#b4edfc;"
+               href="src/WiFi CSI를 이용한 잠재적 위치 추론.pdf" target="_blank" rel="noopener noreferrer">view paper</a>
           </div>
         </div>
+
+        <!-- 추후 2024, 2023... 같은 연도 그룹을 동일 패턴으로 추가하면 됨 -->
       </div>
     </section>
   </main>
