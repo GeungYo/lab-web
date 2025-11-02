@@ -45,7 +45,6 @@
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Apple SD Gothic Neo, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--text);
-      /* 상단 쪽에 블러 글로우 포인트 */
       background:
         radial-gradient(900px 600px at 15% -10%, rgba(129,222,216,.12), transparent 40%),
         radial-gradient(900px 600px at 90% 0%, rgba(122,193,255,.10), transparent 45%),
@@ -53,7 +52,7 @@
         radial-gradient(700px 600px at 65% 45%, rgba(129,222,216,.12), transparent 50%),
         var(--bg);
       background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-      background-attachment: fixed; /* 스크롤 시 패턴 반복처럼 보이는 현상 완화 */
+      background-attachment: fixed;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -89,7 +88,6 @@
     .card:hover { box-shadow: 0 18px 40px rgba(2,6,23,.32); border-color: #2a3a4a; }
     .card h3 { margin: 0 0 .6rem; font-size: 1.18rem; }
 
-    /* 틸트 하이라이트 */
     .card._tilt::after{
       content:"";
       position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
@@ -167,7 +165,6 @@
       text-shadow: 0 2px 22px rgba(130,228,222,.12);
     }
     .hero .sub{
-      /* ✅ 오타 수정 */
       color: var(--muted);
       font-size: clamp(1rem, .8vw + .7rem, 1.25rem);
       margin-top: 4px;
@@ -187,7 +184,6 @@
     .grid.people { justify-content: center; }
     .person { display: grid; gap: 14px; align-items: center; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)); }
 
-    /* 멤버 이미지 통일 */
     .card.person img {
       width: 110px; height: 140px; object-fit: cover; object-position: 50% 40%;
       border-radius: 12px; box-shadow: 0 10px 22px rgba(0,0,0,.25); background: #111822;
@@ -195,10 +191,8 @@
     .card.person h4 { margin: 0; font-size: 20px; font-weight:700; }
     .card.person .chip { display: inline-block; border-radius: 999px; color: #a9c2d3; font-size: .85rem; margin-top: 8px; padding: 6px 10px; background: rgba(255,255,255,.04); border: 1px solid var(--line); }
 
-    /* 교수님 카드 폭 보정 */
     .card.person[style*="width: 600px"] { width: min(100%, 600px) !important; }
 
-    /* 멤버 내부 레이아웃: 모바일 세로 / PC 가로 */
     .card.person > div { display:flex; gap:14px; align-items:center; }
     @media (max-width: 720px) {
       .card.person > div { flex-direction: column; align-items: center; text-align: center; margin-left: 0 !important; }
@@ -225,7 +219,6 @@
 
     .news-item > div > div { display: flow-root; }
 
-    /* 스크롤 애니메이션 */
     [data-animate]{ opacity: 0; transform: translateY(10px);
       transition: opacity .6s var(--ease-out), transform .6s var(--ease-out), filter .6s var(--ease-out);
       will-change: transform, opacity, filter; }
@@ -254,16 +247,14 @@
       background:rgba(255,255,255,.06);
     }
     .r-card .media{
-      position:relative;            /* ➜ 슬라이더 버튼 배치용 */
+      position:relative;
       border-radius:14px;overflow:hidden;
       background:#0d1318; aspect-ratio:16/9;
       box-shadow:0 10px 26px rgba(0,0,0,.28) inset, 0 8px 18px rgba(0,0,0,.25);
     }
-    /* 기존 직접 자식도 지원(호환) */
     .r-card .media > img{object-fit:contain;display:block}
     .r-card .media > video{width:100%;height:100%;object-fit:contain;display:block}
 
-    /* ➜ 미디어 슬라이더 구조 스타일 (JS가 .c-* 래퍼 생성) */
     .r-card .media .c-viewport{width:100%;height:100%;overflow:hidden}
     .r-card .media .c-track{display:flex;width:100%;height:100%;transition:transform .45s var(--ease-in-out)}
     .r-card .media .c-slide{flex:0 0 100%;height:100%}
@@ -286,12 +277,10 @@
       position:absolute; right:12px; bottom:10px;
       font-size:.85rem; color:#f2fefe;
       background:rgba(35, 54, 51, 0.394); 
-      border-radius:999px; padding:.2rem .55rem; backdrop-filter: bl
-      ur(4px);
+      border-radius:999px; padding:.2rem .55rem; backdrop-filter: blur(4px);
     }
     .r-card .media.dragging .c-track{transition:none;cursor:grabbing}
 
-    /* 좌우 2열 배치 + 지그재그 */
     @media (min-width: 920px){
       .research-grid{gap:24px}
       .r-card{grid-template-columns:1.15fr .85fr;align-items:center;padding:28px}
@@ -300,7 +289,6 @@
       .r-card.swap .media{order:1}
     }
 
-    /* 반응형 */
     @media (min-width: 768px) {
       .links { display: flex; }
       .menu-btn { display: none; }
@@ -324,7 +312,6 @@
       * { animation: none !important; transition: none !important; }
     }
 
-    /* News collapse (design only) */
     :root { --news-collapsed: 980px; }
     .news-wrap{ position: relative; max-height: var(--news-collapsed); overflow: hidden; }
     .news-wrap::after{
@@ -339,13 +326,12 @@
     .news-more{ position:absolute; left:50%; transform:translateX(-50%); bottom:18px; z-index:2; }
     .news-wrap.is-open .news-more{ position:static; transform:none; margin:16px auto 0; display:inline-flex; }
   
-  /* === About: 무한 마키(회전) === */
+    /* === About: 무한 마키(회전) === */
     .about-marquee{
       --gap: 18px;
       position: relative;
       margin-top: 22px;
       overflow: hidden;
-      /* 좌우 페이드 마스크로 ‘회전’ 느낌 강조 */
       -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
     }
@@ -368,54 +354,60 @@
       will-change: transform;
       animation: about-marquee var(--about-duration, 40s) linear infinite;
     }
-    .about-marquee:hover .about-track{ animation-play-state: paused; } /* hover 시 일시정지 */
+    .about-marquee:hover .about-track{ animation-play-state: paused; }
 
     .about-card{
       flex: 0 0 clamp(200px, 34vw, 330px);
-      /* 기존 .card 스타일을 그대로 쓰되, 흐름에 맞게 최소 폭만 지정 */
     }
-
     @keyframes about-marquee{
       from{ transform: translateX(0); }
-      to  { transform: translateX(calc(-50% - var(--gap)/2)); } /* 콘텐츠 2배 구성(원본+복제) 기준 */
+      to  { transform: translateX(calc(-50% - var(--gap)/2)); }
     }
-
-    /* 접근성: 모션 최소화 설정 시 정지 + 자동 줄바꿈 */
     @media (prefers-reduced-motion: reduce){
       .about-track{ animation: none !important; flex-wrap: wrap; }
       .about-marquee::before, .about-marquee::after{ display:none; }
     }
+
     /* === News images: mobile-friendly grid === */
     @media (max-width: 768px) {
-      /* 이미지들을 그리드로 재배치 (2열) */
       .news-item > div > div{
         display: grid !important;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 10px;
-        clear: both; /* 기존 float의 잔여 영향 제거 */
+        clear: both;
       }
-      /* 인라인 width/float 강제 무시 + 반응형 크기 */
       .news-item > div > div img{
         width: auto !important;
         height: auto !important;
         float: none !important;
         margin: 0 !important;
         display: block !important;
-        border-radius: 10px;              /* 기존 스타일과 일관 */
-        box-shadow: var(--shadow);        /* 기존 스타일과 일관 */
+        border-radius: 10px;
+        box-shadow: var(--shadow);
       }
     }
 
-    
-
-
+    /* === Member → Alumni 구분선 === */
+    .section-divider{
+      margin: 54px 0 26px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      display:flex; align-items:center; gap:12px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing:.2px;
+    }
+    .section-divider .bar{
+      flex:1; height:2px; background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius:2px; opacity:.4;
+    }
   </style>
 </head>
 
 <body>
   <header>
     <div class="container nav" role="navigation" aria-label="주요">
-      <div class="brand"><img class="logo" src="img/sswu.png" aria-hidden="true"></img><span id="labName">AI Lab</span></div>
+      <div class="brand"><img class="logo" src="img/sswu.png" aria-hidden="true"><span id="labName">AI Lab</span></div>
       <nav class="links" aria-label="주요 링크" id="topNav">
         <a href="#about">About</a>
         <a href="#research">Research</a>
@@ -442,7 +434,6 @@
           <div class="eyebrow"  style="width:100%;">Sungshin Women's University</div>
           <div class="eyebrow"  style="width:100%; margin-top: -10px;">- Study of AI Convergence</div>
 
-          <!-- 좌정렬 대형 타이포 (텍스트 고정) -->
           <h1 data-animate="scale" style="margin-top: 5px;">Sensing the World with AI</h1>
 
           <p class="sub" data-animate="up" style="font-size: 20px;">Advancing Localization and Protecting Human through Multimodal Signals</p>
@@ -465,10 +456,8 @@
           creating technology that perceives the world intelligently.
         </p>
 
-        <!-- ▶▶ 무한 마키(회전) 레일 시작: 기존 카드들을 트랙 안에 배치합니다 -->
         <div class="about-marquee" data-speed="200">
           <div class="about-track">
-            <!-- 기존 About 카드 4개를 그대로 여기로 옮겨주세요 -->
             <article class="card about-card">
               <div class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
@@ -508,13 +497,10 @@
               <h3>AI &amp; Reasoning</h3>
               <p class="muted">Leveraging LLMs and machine learning to interpret multimodal signals intelligently.</p>
             </article>
-            <!-- ▲▲ 여기까지가 원래 있던 4개 카드 -->
           </div>
         </div>
-        <!-- 무한 마키(회전) 레일 끝 -->
       </div>
     </section>
-
 
     <!-- Research -->
     <section id="research" class="section" data-animate="up">
@@ -541,7 +527,6 @@
               <video src="research/ppg1.MP4" playsinline muted loop controls></video>
               <img src="research/ppg3.jpg" alt="PPG visualization" style="object-fit: contain;">
               <img src="research/ppg2.jpg" alt="PPG visualization" style="object-fit: contain;">
-
             </div>
           </article>
 
@@ -560,8 +545,7 @@
               </div>
             </div>
             <div class="media">
-              <!-- <video src="src/geofence_demo.mp4" playsinline muted loop controls></video>
-              <img src="img/geofence_map.png" alt="Geofence map"> -->
+              <!-- optional media -->
             </div>
           </article>
 
@@ -580,8 +564,7 @@
               </div>
             </div>
             <div class="media">
-              <!-- <video src="src/csi_demo.mp4" playsinline muted loop controls></video>
-              <img src="img/csi_heatmap.jpg" alt="CSI heatmap"> -->
+              <!-- optional media -->
             </div>
           </article>
 
@@ -600,8 +583,7 @@
               </div>
             </div>
             <div class="media">
-              <!-- <video src="src/llm_reasoning.mp4" playsinline muted loop controls></video>
-              <img src="img/report_ui.png" alt="Report UI"> -->
+              <!-- optional media -->
             </div>
           </article>
 
@@ -620,8 +602,7 @@
               </div>
             </div>
             <div class="media">
-              <!-- <video src="src/imu_risk.mp4" playsinline muted loop controls></video>
-              <img src="img/imu_plot.png" alt="IMU plot"> -->
+              <!-- optional media -->
             </div>
           </article>
 
@@ -692,8 +673,8 @@
 
         <!-- UG -->
         <div class="grid people" style="margin-top: 30px;" data-stagger>
-          <!-- 이하 멤버 카드들 동일 -->
-          <!--김하정-->
+          <!-- 이하 UG 멤버 카드들 (생략 없이 그대로 유지) -->
+          <!-- ... 기존 멤버 카드들 ... -->
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/하정.jpg" alt="UG profile" width="100" height="125" />
@@ -705,7 +686,7 @@
               </div>
             </div>
           </div>
-          <!--김승연-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/승연.jpg" alt="UG profile" width="100" height="125" />
@@ -717,7 +698,7 @@
               </div>
             </div>
           </div>
-          <!--김지민-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/지민.jpg" alt="UG profile" width="100" height="125" />
@@ -729,7 +710,7 @@
               </div>
             </div>
           </div>
-          <!--문정윤-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/정윤.jpg" alt="UG profile" width="95" height="125" />
@@ -741,7 +722,7 @@
               </div>
             </div>
           </div>
-          <!--박해름-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/해름.jpg" alt="UG profile" width="100" height="130" />
@@ -753,10 +734,10 @@
               </div>
             </div>
           </div>
-          <!--박주연-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
-              <img src="img/주연.jpg" alt="주연 언니 사진" width="100" height="125" />
+              <img src="img/주연.jpg" alt="UG profile" width="100" height="125" />
               <div>
                 <h4>Juyeon Park</h4>
                 <p style="font-size:17px; color:#64b1da; margin-top:0; margin-bottom: 0; font-weight:600">Undergraduate Student</p>
@@ -765,10 +746,10 @@
               </div>
             </div>
           </div>
-          <!--신윤지-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
-              <img src="img/윤지.JPG" alt="윤지 사진" width="100" height="125" />
+              <img src="img/윤지.JPG" alt="UG profile" width="100" height="125" />
               <div>
                 <h4>Yoonji Shin</h4>
                 <p style="font-size:17px; color:#64b1da; margin-top:0; margin-bottom: 0; font-weight:600">Undergraduate Student</p>
@@ -777,7 +758,7 @@
               </div>
             </div>
           </div>
-          <!--안희랑-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/희랑.jpg" alt="UG profile" width="95" height="130" />
@@ -789,7 +770,7 @@
               </div>
             </div>
           </div>
-          <!--오긍요-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/긍요.png" alt="UG profile" width="95" height="125" />
@@ -801,7 +782,7 @@
               </div>
             </div>
           </div>
-          <!--홍지연-->
+
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/지연.jpg" alt="UG profile" width="100" height="125" />
@@ -814,6 +795,62 @@
             </div>
           </div>
         </div>
+
+        <!-- ===== 구분선 + Alumni 섹션 추가 ===== -->
+        <div class="section-divider" aria-hidden="true">
+          <span>Alumni</span>
+          <div class="bar"></div>
+        </div>
+
+        <div class="grid people" data-stagger>
+          <!-- 기본 프로필 SVG data URL (필요시 src를 이미지 경로로 교체 가능) -->
+          <!-- 유소희 -->
+          <div class="card person" data-animate="up">
+            <div style="display:flex; gap:14px; margin-left:7px;">
+              <img alt="Alumni profile"
+                   width="100" height="125"
+                   src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
+              <div>
+                <h4>Sohee Yoo</h4>
+                <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">B.S.</p>
+                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">AI developer in NH</p>
+                <div class="chip">email@example.com</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alumni 2 -->
+          <div class="card person" data-animate="up">
+            <div style="display:flex; gap:14px; margin-left:7px;">
+              <img alt="Alumni profile"
+                   width="100" height="125"
+                   src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
+              <div>
+                <h4>Alumni Name 2</h4>
+                <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">B.S.</p>
+                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">Former Research Area</p>
+                <div class="chip">email@example.com</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alumni 3 -->
+          <div class="card person" data-animate="up">
+            <div style="display:flex; gap:14px; margin-left:7px;">
+              <img alt="Alumni profile"
+                   width="100" height="125"
+                   src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
+              <div>
+                <h4>Alumni Name 3</h4>
+                <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">M.S.</p>
+                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">Former Research Area</p>
+                <div class="chip">email@example.com</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ===== Alumni 섹션 끝 ===== -->
+
       </div>
     </section>
 
@@ -985,18 +1022,10 @@
       });
     })();
 
-    /* ============================
-       Research 미디어 슬라이더 (비디오+이미지)
-       ✔ 화살표 버튼으로만 이동 (드래그/스와이프/키보드 이동 제거)
-       - .r-card .media 내부의 <video>/<img>들을 슬라이드로 래핑
-       - 1/N 표시, 좌우 버튼
-       - 슬라이드가 1개면 컨트롤 자동 숨김
-       - 활성 슬라이드 비디오만 재생
-    ============================ */
+    /* Research 미디어 슬라이더 (화살표 전용) */
     (function(){
       const medias = Array.from(document.querySelectorAll('.r-card .media'));
       medias.forEach(media => {
-        // 유효한 미디어만 수집
         const rawKids = Array.from(media.children).filter(node => {
           const tag = node.tagName?.toLowerCase();
           if (tag !== 'video' && tag !== 'img') return false;
@@ -1006,14 +1035,12 @@
 
         if (rawKids.length === 0) return;
 
-        // 래퍼 생성
         const viewport = document.createElement('div');
         viewport.className = 'c-viewport';
         const track = document.createElement('div');
         track.className = 'c-track';
         viewport.appendChild(track);
 
-        // 기존 미디어를 슬라이드로 이동
         rawKids.forEach(el => {
           const slide = document.createElement('div');
           slide.className = 'c-slide';
@@ -1021,14 +1048,12 @@
           track.appendChild(slide);
         });
 
-        // 기존 내용 비우고 슬라이더 삽입
         media.innerHTML = '';
         media.appendChild(viewport);
 
         const count = rawKids.length;
         let index = 0;
 
-        // 컨트롤 (슬라이드가 1개면 만들지 않음)
         let prevBtn, nextBtn, pager;
         if (count > 1) {
           prevBtn = document.createElement('button');
@@ -1062,7 +1087,7 @@
             const v = slide.querySelector('video');
             if (!v) return;
             if (i === index) {
-              v.play().catch(()=>{ /* ignore autoplay block */ });
+              v.play().catch(()=>{});
             } else {
               v.pause();
             }
@@ -1078,30 +1103,26 @@
         if (prevBtn) prevBtn.addEventListener('click', () => go(index - 1));
         if (nextBtn) nextBtn.addEventListener('click', () => go(index + 1));
 
-        // ✔ 드래그/스와이프/키보드 이동 제거 (의도적으로 미구현)
-
-        // 초기 sync
         syncTrack();
         syncVideoPlayback();
       });
     })();
+
+    // About 마키 속도/복제
     (function(){
-    const marquee = document.querySelector('#about .about-marquee');
-    const track   = document.querySelector('#about .about-track');
-    if(!marquee || !track) return;
+      const marquee = document.querySelector('#about .about-marquee');
+      const track   = document.querySelector('#about .about-track');
+      if(!marquee || !track) return;
 
-    // 콘텐츠 한 번 더 복제해서 2배 길이로 만들어 끊김 없이 순환
-    track.innerHTML = track.innerHTML + track.innerHTML;
+      track.innerHTML = track.innerHTML + track.innerHTML;
 
-    // 속도(px/s)에 따라 전체 길이만큼 도는 시간 자동 계산
-    const speedPxPerSec = Number(marquee.getAttribute('data-speed') || 90);
-    // 브라우저 레이아웃 계산 이후에 길이 측정
-    requestAnimationFrame(() => {
-      const totalWidth = track.scrollWidth;    // 복제 포함한 총 길이
-      const duration = totalWidth / speedPxPerSec;
-      track.style.setProperty('--about-duration', `${duration}s`);
-    });
-  })();
+      const speedPxPerSec = Number(marquee.getAttribute('data-speed') || 90);
+      requestAnimationFrame(() => {
+        const totalWidth = track.scrollWidth;
+        const duration = totalWidth / speedPxPerSec;
+        track.style.setProperty('--about-duration', `${duration}s`);
+      });
+    })();
   </script>
 </body>
 </html>
