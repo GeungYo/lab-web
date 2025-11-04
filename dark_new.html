@@ -422,7 +422,6 @@
     .section-divider{
       margin: 54px 0 26px;
       padding-top: 26px;
-      border-top: 1px solid var(--line);
       display:flex; align-items:center; gap:12px;
       color: var(--muted);
       font-weight: 800;
@@ -470,7 +469,7 @@
           <p class="sub" data-animate="up" style="font-size: 20px;">Advancing Localization and Protecting Human through Multimodal Signals</p>
 
           <div class="cta" data-animate="up">
-            <a class="btn" href="#about">About</a>
+            <a class="btn" href="#news">What’s New</a>
             <a class="btn ghost" href="#projects">Projects</a>
           </div>
         </div>
@@ -543,55 +542,59 @@
           <!-- 1. PPG-based Risk Detection -->
           <article class="r-card" data-animate="up">
             <div class="txt">
-              <h3 class="title">PPG-based Risk Detection</h3>
+              <h3 class="title">PPG-based Threat Detection</h3>
               <p class="desc">
-                Detects physiological risk by inferring breath-holding, fear, and stress states
-                from PPG signals in real time.
+                Develop an automatic detection system for risk detection system for risk signals arising from
+                emotional responses and transient physiological anomalies using low-cost sensors
               </p>
               <div class="chips">
                 <span class="chip">PPG Signals</span>
-                <span class="chip">Stress Detection</span>
-                <span class="chip">Physiological Monitoring</span>
+                <span class="chip">Wearable device</span>
+                <span class="chip">Treat detection</span>
               </div>
             </div>
             <div class="media">
-              <video src="research/ppg1.MP4" playsinline muted loop controls></video>
-              <img src="research/ppg3.jpg" alt="PPG visualization" style="object-fit: contain;">
-              <img src="research/ppg2.jpg" alt="PPG visualization" style="object-fit: contain;">
+              <video src="research/ppg1.MP4" style="object-fit: contain;" playsinline muted loop controls></video>
+              <img src="research/ppg2.png" alt="PPG visualization" style="object-fit: contain;">
+              <video src="research/ppg3.MP4" style="object-fit: contain;" playsinline muted loop controls></video>
+              <img src="research/ppg4.png" alt="PPG visualization" style="object-fit: contain;">
+              
             </div>
           </article>
 
-          <!-- 2. Geofencing-based Risk Detection -->
+          <!-- 3. Wi-Fi CSI  -->
           <article class="r-card swap" data-animate="up">
             <div class="txt">
-              <h3 class="title">Geofencing-based Risk Detection</h3>
-              <p class="desc">
-                Detects risky situations by identifying route deviations from habitual paths
-                and unsafe-zone entries using spatial context.
-              </p>
-              <div class="chips">
-                <span class="chip">Spatial Analysis</span>
-                <span class="chip">Route Monitoring</span>
-                <span class="chip">Safety Zones</span>
-              </div>
-            </div>
-            <div class="media">
-              <!-- optional media -->
-            </div>
-          </article>
-
-          <!-- 3. Wi-Fi CSI Sensing -->
-          <article class="r-card" data-animate="up">
-            <div class="txt">
-              <h3 class="title">Wi-Fi CSI Sensing</h3>
+              <h3 class="title">Wi-Fi CSI Based Localization</h3>
               <p class="desc">
                 Detects presence and atypical movement without wearables by analyzing RF
-                channel variations, complementing on-body sensing.
+                channel variations, complement ing on-body sensing.
               </p>
               <div class="chips">
                 <span class="chip">RF Sensing</span>
                 <span class="chip">Contactless Detection</span>
                 <span class="chip">Movement Analysis</span>
+              </div>
+            </div>
+            <div class="media">
+              <video src="research/csi1.MP4" style="object-fit: contain;" playsinline muted loop controls></video>
+              <img src="research/csi2.png" alt="csi" style="object-fit: contain;">            
+              <img src="research/csi3.jpg" alt="csi" style="object-fit: contain;">                        
+            </div>
+          </article>
+
+          <!-- 2. Geofencing-based Risk Detection -->
+          <article class="r-card" data-animate="up">
+            <div class="txt">
+              <h3 class="title">Geofencing-based Detection of Abnormal Paths for Proteted Individuals</h3>
+              <p class="desc">
+                Using GPS data, we learn the daily movement patterns of protected individuals. We then predict normal Paths
+                GPR. After analyzing the differences between the predicted results and the actual movement paths, we automatically detect abnormal movements.
+              </p>
+              <div class="chips">
+                <span class="chip">Spatial Analysis</span>
+                <span class="chip">Route Monitoring</span>
+                <span class="chip">Safety Zones</span>
               </div>
             </div>
             <div class="media">
@@ -644,25 +647,39 @@
     <!-- News -->
     <section id="news" class="section">
       <div class="container">
-        <h2 style="font-size: 35px;" data-animate="up">Latest News</h2>
+        <h2 style="font-size: 35px;" data-animate="up">LAB News</h2>
         <div class="news-wrap" data-collapsible>
           <div class="news" data-stagger>
             <!-- 치안 박람회 -->
             <div class="news-item" data-animate="up">
               <time datetime="2025-10-01">2025-10-22 ~ 2025-10-26</time>
-              <div style="margin-bottom: 10px;">Participated Korea Police World Expo</div>
+              <div style="margin-bottom: 10px;">Exhibited at the Korea Police World Expo (2025)</div>
               <div>
                 <div>
                   <img style="width: 200px; float:left; margin-right: 10px;" src="img/police1.jpg" alt="">
-                  <img style="width: 200px; float:left; margin-right: 10px" src="img/police3.jpg" alt="">
+                  <img style="width: 200px; float:left; margin-right: 10px;" src="img/police4.jpg" alt="">                  
                   <img style="width: 350px; float:left; margin-right: 10px;" src="img/police2.jpg" alt="">
+
                 </div>
               </div>
             </div>
+
+            <!--하계학술박람회-->
+            <div class="news-item" data-animate="up">
+              <time datetime="2025-10-01">2025-06-20</time>
+              <div style="margin-bottom: 10px;">Presented at the KICS Summer Conference 2025</div>
+              <div>
+                <div>
+                  <img style="width: 190px; float:left; margin-right: 10px;" src="img/kics.jpg" alt="">
+                  <img style="width: 450px; float:left; margin-right: 10px" src="img/kics2.jpg" alt="">
+                </div>
+              </div>
+            </div>
+
             <!-- 상장 -->
             <div class="news-item" data-animate="up">
               <time datetime="2025-10-01">2024-05-24</time>
-              <div style="margin-bottom: 10px;">Participated Korea Police World Expo</div>
+              <div style="margin-bottom: 10px;">Received an award at the KICS Winter Conference 2024</div>
               <div>
                 <div>
                   <img style="width: 200px; float:left; margin-right: 10px;" src="img/한국정보처리학회 2024 학부생 논문경진대회상_황규원_240709_095616_1.png" alt="">
@@ -680,6 +697,10 @@
       <div class="container" style="align-content: center;">
         <h2 style="font-size: 35px;" data-animate="up">Member</h2>
 
+        <div class="section-divider" aria-hidden="true">
+          <span style="font-size: 30px;">Professor</span>
+          <div class="bar"></div>
+        </div>
         <!-- PI -->
         <div class="card person" style="width: 600px; margin: 0 auto;" data-animate="up">
           <div style="display:flex; gap:14px; justify-content: center;">
@@ -689,7 +710,7 @@
               <p style="font-size:17px; color:#64b1da; margin-top:0; margin-bottom: 0; font-weight:600">Associate Professor</p>
               <p style="font-size: 15px; margin-top:0; color:#6c8796; margin-bottom: 0;">Indoor Positioning&Localization · Machine learning · Drone Flight Control · Wireless Sensor networks</p>
               <div style="display:flex; align-items:center; gap:14px; margin-top: 30px;">
-                <span style="color:var(--muted); font-size: 14px;">jhyoo@sungshin.ac.kr</span>
+                <span class="chip" style="color:var(--muted); font-size: 14px;">jhyoo@sungshin.ac.kr</span>
                 <a href="https://home.ipinlabs.com/ko/" target="_blank" rel="noopener"
                   style="display:inline-flex; align-items:center; gap:8px; padding:0; border:0; background:transparent; box-shadow:none; color:#4d7d92; text-decoration:underline; font-weight:550; font-size:14px; margin-left:0;">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" style="flex:0 0 16px; fill:#7fb1cc; margin-top:3px;">
@@ -703,6 +724,10 @@
         </div>
 
         <!-- UG -->
+         <div class="section-divider" aria-hidden="true">
+          <span style="font-size: 30px;">Undergraduate Student</span>
+          <div class="bar"></div>
+        </div>
         <div class="grid people" style="margin-top: 30px;" data-stagger>
           <!-- UG 멤버 카드들 (생략 없이 유지) -->
           <div class="card person" data-animate="up">
@@ -803,7 +828,7 @@
 
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
-              <img src="img/긍요.png" alt="UG profile" width="95" height="125" />
+              <img src="img/긍요2.jpg" alt="UG profile" width="95" height="125" />
               <div>
                 <h4>Geung-yo Oh</h4>
                 <p style="font-size:17px; color:#64b1da; margin-top:0; margin-bottom: 0; font-weight:600">Undergraduate Student</p>
@@ -828,7 +853,7 @@
 
         <!-- ===== 구분선 + Alumni 섹션 ===== -->
         <div class="section-divider" aria-hidden="true">
-          <span>Alumni</span>
+          <span style="font-size: 30px;">Alumni</span>
           <div class="bar"></div>
         </div>
 
@@ -840,8 +865,7 @@
               <div>
                 <h4>Sohee Yoo</h4>
                 <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">B.S.</p>
-                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">AI developer in NH</p>
-                <div class="chip">email@example.com</div>
+                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">AI developer in NH Bank</p>
               </div>
             </div>
           </div>
@@ -851,23 +875,36 @@
               <img alt="Alumni profile" width="100" height="125"
                    src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
               <div>
-                <h4>Alumni Name 2</h4>
-                <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">B.S.</p>
-                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">Former Research Area</p>
-                <div class="chip">email@example.com</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card person" data-animate="up">
-            <div style="display:flex; gap:14px; margin-left:7px;">
-              <img alt="Alumni profile" width="100" height="125"
-                   src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
-              <div>
-                <h4>Alumni Name 3</h4>
+                <h4>Haeun Oh</h4>
                 <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">M.S.</p>
-                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">Former Research Area</p>
-                <div class="chip">email@example.com</div>
+                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">Master's Student at UNIST</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card person" data-animate="up">
+            <div style="display:flex; gap:14px; margin-left:7px;">
+              <img alt="Alumni profile" width="100" height="125"
+                   src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
+              <div>
+                <h4>Jihyung Kim</h4>
+                <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">B.S.</p>
+                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">Currently working in the AI industry</p>
+              </div>
+            </div>
+          </div>
+
+      
+
+
+          <div class="card person" data-animate="up">
+            <div style="display:flex; gap:14px; margin-left:7px;">
+              <img alt="Alumni profile" width="100" height="125"
+                   src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
+              <div>
+                <h4>Gyuwon Hwang</h4>
+                <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">B.S.</p>
+                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">Graduated in AI Convergence</p>
               </div>
             </div>
           </div>
@@ -916,7 +953,11 @@
           </div>
         </div>
 
-        <!-- 추후 2024, 2023... 같은 연도 그룹을 동일 패턴으로 추가하면 됨 -->
+        <div class="year-row" aria-hidden="true">
+          <span class="year">2024</span>
+          <div class="rule"></div>
+        </div>
+
       </div>
     </section>
   </main>
