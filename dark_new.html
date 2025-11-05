@@ -565,7 +565,7 @@
           <!-- 3. Wi-Fi CSI  -->
           <article class="r-card swap" data-animate="up">
             <div class="txt">
-              <h3 class="title">Wi-Fi CSI Based Localization</h3>
+              <h3 class="title">Wi-Fi CSI Based Localization and Pose Estimation</h3>
               <p class="desc">
                 Detects presence and atypical movement without wearables by analyzing RF
                 channel variations, complement ing on-body sensing.
@@ -586,10 +586,9 @@
           <!-- 2. Geofencing-based Risk Detection -->
           <article class="r-card" data-animate="up">
             <div class="txt">
-              <h3 class="title">Geofencing-based Detection of Abnormal Paths for Proteted Individuals</h3>
+              <h3 class="title">Geofencing-based Abnormal Path Detection</h3>
               <p class="desc">
-                Using GPS data, we learn the daily movement patterns of protected individuals. We then predict normal Paths
-                GPR. After analyzing the differences between the predicted results and the actual movement paths, we automatically detect abnormal movements.
+                Using GPS data, we model the daily movement patterns of protected individuals and detect abnormal paths through GPR-based prediction and comparison.
               </p>
               <div class="chips">
                 <span class="chip">Spatial Analysis</span>
@@ -1069,7 +1068,7 @@
     })();
 
     /* News collapse toggle — 안정화 */
-    (()=>{
+    (function(){
       const wrap = document.querySelector('.news-wrap');
       if(!wrap) return;
       const btn = wrap.querySelector('.news-more');
