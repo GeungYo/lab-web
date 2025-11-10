@@ -173,7 +173,7 @@
     .cta .btn{ font-size: clamp(.95rem, .3vw + .85rem, 1.05rem); padding:.95rem 1.25rem; }
 
     /* 공통 섹션 */
-    .section { padding: 70px 0; scroll-margin-top: calc(var(--header-h) + 16px); }
+    .section { padding: 70px 0; scroll-margin-top: 16px; }
     .section h2 { font-size: clamp(1.6rem, 2vw + .9rem, 2.2rem); margin: 0 0 1rem; }
     .muted { color: var(--muted); }
     .grid { display: grid; gap: 20px; }
@@ -542,18 +542,18 @@
             <div class="txt">
               <h3 class="title">PPG-based Threat Detection</h3>
               <p class="desc">
-                Develop an automatic detection system for risk detection system for risk signals arising from
+                Develop an automatic detection system for risk signals arising from
                 emotional responses and transient physiological anomalies using low-cost sensors
               </p>
               <div class="chips">
                 <span class="chip">PPG Signals</span>
                 <span class="chip">Wearable device</span>
-                <span class="chip">Treat detection</span>
+                <span class="chip">Threat detection</span>
               </div>
             </div>
             <div class="media">
               <video src="research/ppg1.MP4" style="object-fit: contain;" playsinline muted loop controls></video>
-              <img src="research/ppg2.png" alt="PPG visualization" style="object-fit: contain;">
+              <img src="research/ppg2.jpg" alt="PPG visualization" style="object-fit: contain;">
               <video src="research/ppg3.MP4" style="object-fit: contain;" playsinline muted loop controls></video>
               <img src="research/ppg4.png" alt="PPG visualization" style="object-fit: contain;">
               
@@ -614,7 +614,10 @@
               </div>
             </div>
             <div class="media">
-              <!-- optional media -->
+              <img src="research/llm1.png" alt="csi" style="object-fit: contain;">                          
+              <img src="research/llm2.png" alt="csi" style="object-fit: contain;">            
+              <video src="research/llm3.mp4" style="object-fit: contain;" playsinline muted loop controls></video>
+              <img src="research/llm4.png" alt="csi" style="object-fit: contain;">                       
             </div>
           </article>
 
@@ -705,24 +708,31 @@
     </section>
 
     <!-- Member -->
+    
     <section id="member" class="section">
       <div class="container" style="align-content: center;">
         <h2 style="font-size: 35px;" data-animate="up">Member</h2>
 
+         
         <div class="section-divider" aria-hidden="true">
-          <span style="font-size: 30px;">Professor</span>
+          <span style="font-size: 30px;">Professor & Undergraduate Student</span>
           <div class="bar"></div>
+
         </div>
-        <!-- PI -->
-        <div class="card person" style="width: 600px; margin: 0 auto;" data-animate="up">
-          <div style="display:flex; gap:14px; justify-content: center;">
+        
+        <div class="grid people" style="margin-top: 30px;" data-stagger>
+          <!-- UG 멤버 카드들 (생략 없이 유지) -->
+
+          <!-- 교수님 -->
+          <div class="card person" data-animate="up">
+            <div style="display:flex; gap:14px; margin-left: 7px;">
             <img src="img/재현pf4.png" alt="PI 프로필" width="140" height="180" style="align-self: center; margin-right:10px;"/>
-            <div>
-              <h4 style="margin-top: 10px;">Jaehyun Yoo</h4>
-              <p style="font-size:17px; color:#64b1da; margin-top:0; margin-bottom: 0; font-weight:600">Associate Professor</p>
-              <p style="font-size: 15px; margin-top:0; color:#6c8796; margin-bottom: 0;">Indoor Positioning&Localization · Machine learning · Drone Flight Control · Wireless Sensor networks</p>
-              <div style="display:flex; align-items:center; gap:14px; margin-top: 30px;">
-                <span class="chip" style="color:var(--muted); font-size: 14px;">jhyoo@sungshin.ac.kr</span>
+              <div>
+                <h4>Jaehyun Yoo</h4>
+                <p style="font-size:17px; color:#64b1da; margin-top:0; margin-bottom: -10px; font-weight:600">Assositate Professor</p>
+                <p class="muted" style="font-size: 15px; margin-bottom: 0; color:#6c8796">Indoor Localization · Machine Learning</p>
+                <div class="chip">jhyoo@sungshin.ac.kr</div>
+                <div style="margin-top: 5px;">
                 <a href="https://home.ipinlabs.com/ko/" target="_blank" rel="noopener"
                   style="display:inline-flex; align-items:center; gap:8px; padding:0; border:0; background:transparent; box-shadow:none; color:#4d7d92; text-decoration:underline; font-weight:550; font-size:14px; margin-left:0;">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" style="flex:0 0 16px; fill:#7fb1cc; margin-top:3px;">
@@ -730,18 +740,11 @@
                   </svg>
                   <span>IPIN LABS</span>
                 </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- UG -->
-         <div class="section-divider" aria-hidden="true">
-          <span style="font-size: 30px;">Undergraduate Student</span>
-          <div class="bar"></div>
-        </div>
-        <div class="grid people" style="margin-top: 30px;" data-stagger>
-          <!-- UG 멤버 카드들 (생략 없이 유지) -->
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
               <img src="img/하정pf.jpg" alt="UG profile" width="100" height="125" />
@@ -828,7 +831,7 @@
 
           <div class="card person" data-animate="up">
             <div style="display:flex; gap:14px; margin-left: 7px;">
-              <img src="img/희랑pf.png" alt="UG profile" width="95" height="130" />
+              <img src="img/희랑pf2.png" alt="UG profile" width="95" height="130" />
               <div>
                 <h4>Heerang An</h4>
                 <p style="font-size:17px; color:#64b1da; margin-top:0; margin-bottom: 0; font-weight:600">Undergraduate Student</p>
@@ -920,7 +923,21 @@
               </div>
             </div>
           </div>
+
+          <div class="card person" data-animate="up">
+            <div style="display:flex; gap:14px; margin-left:7px;">
+              <img alt="Alumni profile" width="100" height="125"
+                   src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150"><rect width="120" height="150" rx="12" fill="%23111a22"/><circle cx="60" cy="47" r="23" fill="%232a3a4a"/><rect x="20" y="82" width="80" height="50" rx="10" fill="%232a3a4a"/></svg>' />
+              <div>
+                <h4>Yunhee Jo</h4>
+                <p style="font-size:17px; color:#64b1da; margin:0; font-weight:600">B.S.</p>
+                <p class="muted" style="font-size:15px; margin-top:10px; margin-bottom:0;">Currently working in the AI industry</p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        
         <!-- ===== Alumni 섹션 끝 ===== -->
 
       </div>
